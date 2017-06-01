@@ -1,8 +1,11 @@
-# FinallyTagless
 # WhileLang_FinalTagless
 
 ## What
 This project's purpose is to implement the WHILE language in final tagless style
+
+## Goal
+Implement the WHILE language in final tagless style. Then extend it with a new
+operation: function definitions and a new constructor: Strings.
 
 ## Code Descriptions
 

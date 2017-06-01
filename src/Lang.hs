@@ -51,7 +51,7 @@ class Stmt r where
   skip  :: r a
 
 -- | Primitive values that this language can use
-data Prims = I Int | B Bool | S String | NoOp
+data Prims = I Int | B Bool | NoOp
   deriving (Eq, Show, Ord)
 
 -- | Map to hold let bound variables
