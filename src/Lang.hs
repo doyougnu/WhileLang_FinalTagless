@@ -4,6 +4,7 @@ module Lang where
 
 import Control.Monad.State
 import qualified Data.Map as M
+import Prelude hiding (seq)
 
 -- | Begin the typeClasses!
 
@@ -55,65 +56,75 @@ instance BoolExpr Eval where
     let (s1, (B r)) = j x
     in (s1, B $ not r)
 
--- instance BoolExpr MonadTest where
---   tru             = return $ True
---   fls             = return $ False
---   bEq x y = do
---     x' <- x
---     y' <- y
---     return (x == y)
---   bnot x = x >>= return . not
-
--- instance ArExpr Prims where
---   lit               = I
---   neg  (I i)        = I $ negate i
---   add  (I i) (I i') = I $ i + i'
---   mul  (I i) (I i') = I $ i * i'
---   sub  (I i) (I i') = I $ i - i'
---   div_ (I i) (I i') = I $ div i i'
---   eq   (I i) (I i') = B $ i == i'
---   lte  (I i) (I i') = B $ i <= i'
-
 instance ArExpr Eval where
   lit i = Eval $ \s -> (s, I i)
   neg (Eval j) = Eval $ \s ->
     let (s', I r) = j s
     in (s', I $ negate r)
+
   add (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
     in (s1 `mappend` s2, I $ r1 + r2)
+
   mul (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
     in (s1 `mappend` s2, I $ r1 * r2)
+
   div_ (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
     in (s1 `mappend` s2, I $ div r1 r2)
+
   eq (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
         res = r1 == r2
     in (s1 `mappend` s2, B res)
+
   lte (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
     in (s1 `mappend` s2, B $ r1 <= r2) 
 
-instance ArExpr Maybe where
-  lit = return
-  neg (Just x) = return $ negate x
-  add (Just x) (Just y) = return $ x + y
-  eq (Just x) (Just y) = return $ x == y
+instance Control Eval where
+  if_ (Eval c) (Eval t) (Eval e) = Eval $ \s ->
+    let (s1, B rc) = c s
+        (s2, rt) = t s1
+        (s3, re) = e s1
+    in if rc
+       then (s2, rt) -- strict evaluations
+       else (s3, re)
 
--- instance Control Prims where
---   if_ (B True)  t e = t
---   if_ (B False) t e = e
---   while (B True)  e = e
---   while (B False) e = skip
---   skip              = NoOp
---   -- let_
+  while a b = if_ a (seq b (while a b)) skip
+  var v = Eval $ \s -> (s, s M.! v) --an unhandled exception if var not in map
+  let_ v (Eval x) = Eval $ \s ->
+    let (s1, r) = x s
+    in (M.insert v r s1, NoOp)
+  seq (Eval a) (Eval b) = Eval $ \s ->
+    let (s1, r1) = a s
+        (s2, r2) = b s1
+    in (s2, r2)
+  skip = Eval $ \s -> (s, NoOp) 
 
--- test1 :: (ArExpr r) => r Int
--- test1 = sub (mul (lit 5) (lit 10)) (div_ (lit 2) (lit 2))
+-- we can run this like so: runEval ifTest (emptyState (I 0))
+ifTest :: Eval Int
+ifTest =  if_ (bEq tru fls) (add (lit 1) (lit 2)) (add (lit 1) (lit 1))
+
+-- run like: runEval varTest (M.insert "x" (I 100) $ emptyState (I 0))
+varTest :: Eval Int
+varTest = var "x"
+
+letTest :: Eval Int
+letTest = seq (let_ "x" (add (lit 2) (lit 3))) $
+          seq (let_ "x" (add (var "x") (lit 1))) varTest
+
+whileTest :: Eval Int
+whileTest = seq
+            (let_ "x" (lit 0))
+            (while (lte (var "x") (lit 10))
+             (let_ "x" (add (var "x") (lit 1))))
+
+seqTest :: Eval Int
+seqTest = seq (let_ "x" (lit 100)) (add (var "x") (var "x"))
