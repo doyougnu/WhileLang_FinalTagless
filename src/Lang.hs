@@ -133,11 +133,11 @@ instance Stmt Eval where
   skip = Eval $ \s -> (s, NoOp) 
 
 -- | Testing
--- we can run this like so: runEval ifTest (emptyState (I 0))
+-- we can run this like so: runEval ifTest emptyState
 ifTest :: Eval Int
 ifTest =  if_ (bEq tru fls) (add (lit 1) (lit 2)) (add (lit 1) (lit 1))
 
--- run like: runEval varTest (M.insert "x" (I 100) $ emptyState (I 0))
+-- run like: runEval varTest (M.insert "x" (I 100) emptyState
 varTest :: Eval Int
 varTest = var "x"
 
