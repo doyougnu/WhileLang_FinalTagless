@@ -146,6 +146,7 @@ letTest = seq (let_ "x" (add (lit 2) (lit 3))) $
           seq (let_ "x" (add (var "x") (lit 1))) varTest
 
 whileTest :: Eval Int
+-- this program is actually a lisp, see:
 whileTest = seq
             (let_ "x" (lit 0))
             (while (lte (var "x") (lit 10))

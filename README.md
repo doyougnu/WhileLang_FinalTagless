@@ -6,94 +6,42 @@ This project's purpose is to implement the WHILE language in final tagless style
 ## Where
 If you're confused about where the code is, just look at src/
 
-## Goal
-Implement the WHILE language in final tagless style. Then extend it with a new
-operation: function definitions and a new constructor: Strings.
+## How to run
+I am expecting anyone who wants to use this to be familiar with ghc and ghci. So
+in order to run anything in the src/Lang.hs file just boot up ghci in the root
+folder with the command ```stack ghci``` and you'll enter the right REPL. Then
+to run any statement you may want to run you'll need to pass it to the runEval
+function. Here are some examples:
 
-## Code Descriptions
+### Premade Examples:
 
-### BoolExpr Class
-This class defines operations that are valid for Boolean values
+1. ```runEval ifTest emptyState```
+2. ```runEval letTest emptyState```
+3. ```runEval whileTest  emptyState```
+4. ```runEval seqTest emptyState```
 
-### ArExpr Class
-This class defines operations that are valid for arithmetic values. 
+### Running your own examples
+If you're going to try to write a program yourself you'll need to specify a type
+in order to evaluate. Like this:
 
-### Stmt Class
-This class defines operations that are valid statements in the while language. 
-These are such things as let statments, variable lookup and control flow
-statements such as if and while.
+```haskell
+-- say we want something like this
+let x = if_ (eq (lit 1) (lit 2)) (add (lit 3) (lit 10)) (neg (lit 100))
+-- obviously this will be returning an Int. Thus the final expression should be:
+x :: Eval Int
+let x = if_ (eq (lit 1) (lit 2)) (add (lit 3) (lit 10)) (neg (lit 100))
 
-### Data Types
-I define three data types for this project.
+-- Now to run it, we know we don't depend on anything variables in the state so:
+-- the first element of the tuple is the global state, the snd the result
+λ> runEval x emptyState
+   (fromList [("",NoOp)],I (-100))
 
-1. The first is Prims, these are primitive values in the language and are used
-   as values in the state mapping.
-   
-2. The second, VarStore, is a type synonym for a variable store. I leave this
-   type polymorphic for reuse. This is just a map with strings for keys and the
-   type argument as values
+-- If you do need variables make sure they are defined or in the initial state
+y :: Eval Bool
+let y = while ((var "cond")) (let_ "cond" fls)
 
-3. The third, Eval, is essentially a state monad with a phantom type to satisfy
-   the final tagless style. I force the values to be Prims in the state so that
-   the language can be an instance of classes that return different types. For
-   example, if I leave the values polymorphic then I cannot make Eval an
-   instance of an ArExpr class because I have no way to constrain the internal
-   types to Integers and then pass them to the eq operator.
-
-## Other Comments
-The rest of the code is just some testing expressions and the instantiation of 
-Eval for these type classes. Almost all of the instantiations are defined in the
-nitty gritty details of the state monad. Time permitting, I'll clean it up.
-
-## This roughly implements the AST below
-
-``` haskell
-type Var = String
-
--- *  Booleans
--- | Binary Boolean Ops
-data BinBoolOp = And | Or
-               deriving (Eq, Show, Ord)
-
--- | Relational Boolean Ops
-data RelBoolOp = Less
-               | Greater
-               | Equal
-               | NEqual
-               deriving (Eq, Show, Ord)
-
--- | Boolean Expressions
-data BoolExpr = B Bool
-              | Not BoolExpr
-              | BBinary BinBoolOp BoolExpr BoolExpr
-              | RBinary RelBoolOp ArExpr ArExpr
-              | BNoOp
-              deriving (Eq, Show, Ord)
-
--- * Arithmetic Operators
--- | Binary Arithmatic operators
-data ArBinOp = Add
-             | Subtract
-             | Multiply
-             | Divide
-             deriving (Eq, Show, Ord)
-
--- | Arithmetic Expressions
-data ArExpr  = V Var
-            | I Integer
-            | Neg ArExpr
-            | ABinary ArBinOp ArExpr ArExpr
-            | ArNoOp
-            deriving (Eq, Show, Ord)
-
--- * Statements
-data Stmt = BL BoolExpr
-          | AR ArExpr
-          | ST String
-          | Let String Stmt
-          | If BoolExpr Stmt  Stmt
-          | While BoolExpr Stmt
-          | Seq [Stmt]
-          | NoOp
-          deriving (Eq, Show, Ord)
+-- we are referring to the variable "cond" without defining it so make sure it is
+-- in the initial environment or else you'll get an exception
+λ> runEval y $ M.singleton "cond" (B False)
+   (fromList [("cond",B False)],NoOp)
 ```

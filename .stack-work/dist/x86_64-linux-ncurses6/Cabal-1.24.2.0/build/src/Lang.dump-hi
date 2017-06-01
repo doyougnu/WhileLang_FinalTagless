@@ -1,0 +1,1698 @@
+
+==================== FINAL INTERFACE ====================
+2017-06-01 01:14:56.102465945 UTC
+
+interface FinallyTagless-0.1.0.0-IYylgWihXo27eRWIlROeOz:Lang 8002
+  interface hash: 6e548e0204a29ec65d079620f26c2010
+  ABI hash: 72483d37f86bceef7e8ddb1b39eea673
+  export-list hash: d4cece2c543ac397bc75268fd21597c3
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 04b8662afaa203037211c1bf65803105
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Lang.emptyState
+  Lang.ifTest
+  Lang.letTest
+  Lang.seqTest
+  Lang.varTest
+  Lang.whileTest
+  Lang.ArExpr{Lang.add Lang.div_ Lang.eq Lang.lit Lang.lte Lang.mul Lang.neg Lang.sub}
+  Lang.BoolExpr{Lang.bEq Lang.bnot Lang.fls Lang.tru}
+  Lang.Eval{Lang.Eval runEval}
+  Lang.Prims{Lang.B Lang.I Lang.NoOp}
+  Lang.Stmt{Lang.if_ Lang.let_ Lang.seq Lang.skip Lang.var Lang.while}
+  Lang.VarStore
+module dependencies:
+package dependencies: array-0.5.1.1@array-0.5.1.1 base-4.9.1.0*
+                      containers-0.5.7.1@containers-0.5.7.1
+                      deepseq-1.4.2.0@deepseq-1.4.2.0 ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1 mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
+                      transformers-0.5.2.0@transformers-0.5.2.0
+orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
+         transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
+family instance modules: base-4.9.1.0:Control.Applicative
+                         base-4.9.1.0:Data.Complex base-4.9.1.0:Data.Either
+                         base-4.9.1.0:Data.Functor.Const base-4.9.1.0:Data.Functor.Identity
+                         base-4.9.1.0:Data.List.NonEmpty base-4.9.1.0:Data.Monoid
+                         base-4.9.1.0:Data.Semigroup base-4.9.1.0:Data.Type.Equality
+                         base-4.9.1.0:Data.Version base-4.9.1.0:Data.Void
+                         base-4.9.1.0:GHC.Exts base-4.9.1.0:GHC.Generics
+                         base-4.9.1.0:GHC.IO.Exception base-4.9.1.0:GHC.TypeLits
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Set.Base
+import  -/  base-4.9.1.0:GHC.Base c4231c43c07e46080a26bf94094c7aa1
+import  -/  base-4.9.1.0:GHC.Num 00bfaa7b2f9d6084913c0697a8a49ec8
+import  -/  base-4.9.1.0:GHC.Real 82e4e59051a13dba1da63e1e970a69e6
+import  -/  base-4.9.1.0:GHC.Show a027f5ac24879eaba752f44aa90fe511
+import  -/  base-4.9.1.0:Prelude 22dd289b8469a8fa8dc81cab7b237771
+import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map 20d4ffbee41965d03d6a989425473dc4
+import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base d432f6875983131473086af8cb290590
+import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
+import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
+import  -/  mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6:Control.Monad.State 749dca8ca0e6625b32091d445bd92b01
+083f228bc91c26e97a10043309cb687d
+  $fArExprEval :: Lang.ArExpr Lang.Eval
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Eval
+                  Lang.$fArExprEval_$clit
+                  Lang.$fArExprEval_$cneg
+                  Lang.$fArExprEval_$cadd
+                  Lang.$fArExprEval_$csub
+                  Lang.$fArExprEval_$cmul
+                  Lang.$fArExprEval_$cdiv_
+                  Lang.$fArExprEval_$ceq
+                  Lang.$fArExprEval_$clte -}
+5f7f0007836a9af468919989a96f7a98
+  $fArExprEval1 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$clte w w1 w2 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+6c862f0352022284d351aa174f496aba
+  $fArExprEval10 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cmul w w1 w2 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+92b46965574cb6b7e7a3093310c4177c
+  $fArExprEval11 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+4b4e3aedb0301c6c4804f1884c9093aa
+  $fArExprEval12 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+c08fd891892bf2b11822a76c9fd5c533
+  $fArExprEval13 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (3, True, False)
+                (\ (x :: Lang.Eval GHC.Types.Int)
+                   (y :: Lang.Eval GHC.Types.Int)
+                   (eta :: Lang.VarStore Lang.Prims) ->
+                 Lang.$fArExprEval16
+                   x
+                   (Lang.$fArExprEval14 y)
+                     `cast`
+                   (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                   eta) -}
+2c3b0a80f3773d2e73529cd431a11e10
+  $fArExprEval14 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 2, Strictness: <L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w1 of wild { (,) s' ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval15 Lang.I r -> (s', r) } }
+                 } in
+                 (case ds of ds1 { (,) s' r -> s' },
+                  Lang.I
+                    (case ds of ds1 { (,) s' r ->
+                     case r of wild { GHC.Types.I# x ->
+                     GHC.Types.I# (GHC.Prim.negateInt# x) } }))) -}
+2b95c8f483216f9804157220ab0ea945
+  $fArExprEval15 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+5aa62f6d5f11806955fa993d766a67e8
+  $fArExprEval16 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cadd w w1 w2 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+3ee7dd21e9e5615b2b13f16bded17030
+  $fArExprEval17 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+bf07f327957657364fabc610081fe8d5
+  $fArExprEval18 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+5f7428fa2cb81a2397910a23139ba018
+  $fArExprEval19 ::
+    GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>m,
+     Unfolding: InlineRule (2, True, False)
+                (\ (i :: GHC.Types.Int) (eta :: Lang.VarStore Lang.Prims) ->
+                 (eta, Lang.I i)) -}
+2a19564045b20b97c363d0fa762b417a
+  $fArExprEval2 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+b95e819e5e3e8c9fa1b14b3d9e386999
+  $fArExprEval3 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+1562e5f59632204ed09f32c2064708fa
+  $fArExprEval4 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$ceq w w1 w2 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+21c5758f4e6dba02c4e5e8fc2cd4fb02
+  $fArExprEval5 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+cec27e7dfa197dcbf8db5e22ad529c40
+  $fArExprEval6 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+a078a00885d5b4f61a424d6886aa1f1e
+  $fArExprEval7 ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cdiv_ w w1 w2 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+6d3d55d123335b2f6957da9e126be3b8
+  $fArExprEval8 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+caf736814bb79d9a6e126fff2ba5fecf
+  $fArExprEval9 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+  {- Strictness: x -}
+34d82db477990577f8f42daea8cba9bc
+  $fArExprEval_$cadd ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval16
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+75bae3108502d3b6f27f93fe88a2fa3e
+  $fArExprEval_$cdiv_ ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval7
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+eadab399108c53c7dadf40999031ee81
+  $fArExprEval_$ceq ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Bool
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval4
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+18b7246f44717e2ce3e0753ac2f8e7e3
+  $fArExprEval_$clit :: GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval19
+                  `cast`
+                (<GHC.Types.Int>_R ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+91c7dd3b9177860d70ef8aaeb15582e0
+  $fArExprEval_$clte ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Bool
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval1
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+312b5ba86d5c3a78d16a39a9e55a5962
+  $fArExprEval_$cmul ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval10
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+c43978139a70695ebc17406c92054da5
+  $fArExprEval_$cneg ::
+    Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 2, Strictness: <L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval14
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+b09a1f7712963d3f176c3c8f79953869
+  $fArExprEval_$csub ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int -> Lang.Eval GHC.Types.Int
+  {- Arity: 3,
+     Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fArExprEval13
+                  `cast`
+                (<Lang.Eval GHC.Types.Int>_R
+                 ->_R <Lang.Eval GHC.Types.Int>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+f45ae526d1e3e4085698c8837292aaf7
+  $fBoolExprEval :: Lang.BoolExpr Lang.Eval
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Eval
+                  Lang.$fBoolExprEval_$ctru
+                  Lang.$fBoolExprEval_$cfls
+                  Lang.$fBoolExprEval_$cbEq
+                  Lang.$fBoolExprEval_$cbnot -}
+ade90497ec856a1d89830aaefb724e47
+  $fBoolExprEval1 ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 2, Strictness: <L,1*C1(U(U,1*U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Bool)
+                   (w1 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Bool)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Bool>_P)
+                            w1 of wild { (,) s1 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fBoolExprEval2 Lang.B r -> (s1, r) } }
+                 } in
+                 (case ds of ds1 { (,) s1 r -> s1 },
+                  Lang.B
+                    (case ds of ds1 { (,) s1 r ->
+                     case r of wild {
+                       GHC.Types.False -> GHC.Types.True
+                       GHC.Types.True -> GHC.Types.False } }))) -}
+b8594870c8e05941444f554546bd163a
+  $fBoolExprEval2 :: (Lang.VarStore Lang.Prims, GHC.Types.Bool)
+  {- Strictness: x -}
+9dc9a7012466cd8580f7257c0dc4e0ad
+  $fBoolExprEval3 ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval GHC.Types.Bool
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,U))><L,1*C1(U(U,U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Lang.Eval GHC.Types.Bool)
+                   (w1 :: Lang.Eval GHC.Types.Bool)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cbEq w w1 w2 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+b8f609591143f1738a3908f1cb1b7820
+  $fBoolExprEval4 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (s :: Lang.VarStore Lang.Prims) -> (s, Lang.$fBoolExprEval5)) -}
+7e0cba3e003a2bac0d7bc8902723be41
+  $fBoolExprEval5 :: Lang.Prims
+  {- HasNoCafRefs, Strictness: m2,
+     Unfolding: (Lang.B GHC.Types.False) -}
+7b17e67bab14ac41c714de1648257664
+  $fBoolExprEval6 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (s :: Lang.VarStore Lang.Prims) -> (s, Lang.$fBoolExprEval7)) -}
+b9a81379e11db1fea625439f3b0576b6
+  $fBoolExprEval7 :: Lang.Prims
+  {- HasNoCafRefs, Strictness: m2,
+     Unfolding: (Lang.B GHC.Types.True) -}
+3505277d5da6bcb9e418543375d4232a
+  $fBoolExprEval_$c== :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (ds :: Lang.Prims) (ds1 :: Lang.Prims) ->
+                 case ds of wild {
+                   Lang.I a1
+                   -> case ds1 of wild1 {
+                        DEFAULT -> GHC.Types.False Lang.I b1 -> GHC.Classes.eqInt a1 b1 }
+                   Lang.B a1
+                   -> case ds1 of wild1 {
+                        DEFAULT -> GHC.Types.False
+                        Lang.B b1 -> GHC.Classes.$fEqBool_$c== a1 b1 }
+                   Lang.NoOp
+                   -> case ds1 of wild1 {
+                        DEFAULT -> GHC.Types.False Lang.NoOp -> GHC.Types.True } }) -}
+b4ad077b135a3065496b8cad65b72476
+  $fBoolExprEval_$cbEq ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval GHC.Types.Bool -> Lang.Eval GHC.Types.Bool
+  {- Arity: 3, Strictness: <L,1*C1(U(U,U))><L,1*C1(U(U,U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fBoolExprEval3
+                  `cast`
+                (<Lang.Eval GHC.Types.Bool>_R
+                 ->_R <Lang.Eval GHC.Types.Bool>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+ef54f900f195ca7580dbdc5c3f544661
+  $fBoolExprEval_$cbnot ::
+    Lang.Eval GHC.Types.Bool -> Lang.Eval GHC.Types.Bool
+  {- Arity: 2, Strictness: <L,1*C1(U(U,1*U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fBoolExprEval1
+                  `cast`
+                (<Lang.Eval GHC.Types.Bool>_R
+                 ->_R Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+aca9b060579c187e9c085c892551be37
+  $fBoolExprEval_$cfls :: Lang.Eval GHC.Types.Bool
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fBoolExprEval4
+                  `cast`
+                (Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+973cae61a20c11a6d85b531314e003b6
+  $fBoolExprEval_$ctru :: Lang.Eval GHC.Types.Bool
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fBoolExprEval6
+                  `cast`
+                (Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P)) -}
+3505277d5da6bcb9e418543375d4232a
+  $fEqPrims :: GHC.Classes.Eq Lang.Prims
+  DFunId
+  {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Prims Lang.$fBoolExprEval_$c== Lang.$fEqPrims_$c/= -}
+3505277d5da6bcb9e418543375d4232a
+  $fEqPrims_$c/= :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True
+                        Lang.I b1
+                        -> case a1 of wild2 { GHC.Types.I# x ->
+                           case b1 of wild3 { GHC.Types.I# y ->
+                           case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.==# x y) of wild4 {
+                             GHC.Types.False -> GHC.Types.True
+                             GHC.Types.True -> GHC.Types.False } } } }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True
+                        Lang.B b1
+                        -> case a1 of wild2 {
+                             GHC.Types.False -> b1
+                             GHC.Types.True
+                             -> case b1 of wild3 {
+                                  GHC.Types.False -> GHC.Types.True
+                                  GHC.Types.True -> GHC.Types.False } } }
+                   Lang.NoOp
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Lang.NoOp -> GHC.Types.False } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims :: GHC.Classes.Ord Lang.Prims
+  DFunId
+  {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Prims
+                  Lang.$fEqPrims
+                  Lang.$fOrdPrims_$ccompare
+                  Lang.$fOrdPrims_$c<
+                  Lang.$fOrdPrims_$c<=
+                  Lang.$fOrdPrims_$c>
+                  Lang.$fOrdPrims_$c>=
+                  Lang.$fOrdPrims_$cmax
+                  Lang.$fOrdPrims_$cmin -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$c< :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Lang.I b1 -> GHC.Classes.ltInt a1 b1 }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        Lang.I ds -> GHC.Types.False
+                        Lang.B b1 -> GHC.Classes.$fOrdBool_$c< a1 b1
+                        Lang.NoOp -> GHC.Types.True }
+                   Lang.NoOp -> case b of wild1 { DEFAULT -> GHC.Types.False } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$c<= :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Lang.I b1 -> GHC.Classes.leInt a1 b1 }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        Lang.I ds -> GHC.Types.False
+                        Lang.B b1 -> GHC.Classes.$fOrdBool_$c<= a1 b1
+                        Lang.NoOp -> GHC.Types.True }
+                   Lang.NoOp
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.False Lang.NoOp -> GHC.Types.True } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$c> :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.False Lang.I b1 -> GHC.Classes.gtInt a1 b1 }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        Lang.I ds -> GHC.Types.True
+                        Lang.B b1 -> GHC.Classes.$fOrdBool_$c> a1 b1
+                        Lang.NoOp -> GHC.Types.False }
+                   Lang.NoOp
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Lang.NoOp -> GHC.Types.False } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$c>= :: Lang.Prims -> Lang.Prims -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.False Lang.I b1 -> GHC.Classes.geInt a1 b1 }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        Lang.I ds -> GHC.Types.True
+                        Lang.B b1 -> GHC.Classes.$fOrdBool_$c>= a1 b1
+                        Lang.NoOp -> GHC.Types.False }
+                   Lang.NoOp -> case b of wild1 { DEFAULT -> GHC.Types.True } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$ccompare ::
+    Lang.Prims -> Lang.Prims -> GHC.Types.Ordering
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: Lang.Prims) (b :: Lang.Prims) ->
+                 case a of wild {
+                   Lang.I a1
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.LT Lang.I b1 -> GHC.Classes.compareInt a1 b1 }
+                   Lang.B a1
+                   -> case b of wild1 {
+                        Lang.I ds -> GHC.Types.GT
+                        Lang.B b1 -> GHC.Classes.$fOrdBool_$ccompare a1 b1
+                        Lang.NoOp -> GHC.Types.LT }
+                   Lang.NoOp
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.GT Lang.NoOp -> GHC.Types.EQ } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$cmax :: Lang.Prims -> Lang.Prims -> Lang.Prims
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (x :: Lang.Prims) (y :: Lang.Prims) ->
+                 case x of wild {
+                   Lang.I a1
+                   -> case y of wild1 {
+                        DEFAULT -> wild1
+                        Lang.I b1
+                        -> case a1 of wild2 { GHC.Types.I# x1 ->
+                           case b1 of wild3 { GHC.Types.I# y1 ->
+                           case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.<=# x1 y1) of wild4 {
+                             GHC.Types.False -> wild GHC.Types.True -> wild1 } } } }
+                   Lang.B a1
+                   -> case y of wild1 {
+                        Lang.I ds -> wild
+                        Lang.B b1
+                        -> case a1 of wild2 {
+                             GHC.Types.False -> case b1 of wild3 { DEFAULT -> wild1 }
+                             GHC.Types.True
+                             -> case b1 of wild3 {
+                                  GHC.Types.False -> wild GHC.Types.True -> wild1 } }
+                        Lang.NoOp -> Lang.NoOp }
+                   Lang.NoOp -> case y of wild1 { DEFAULT -> Lang.NoOp } }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fOrdPrims_$cmin :: Lang.Prims -> Lang.Prims -> Lang.Prims
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (x :: Lang.Prims) (y :: Lang.Prims) ->
+                 case x of wild {
+                   Lang.I a1
+                   -> case y of wild1 {
+                        DEFAULT -> wild
+                        Lang.I b1
+                        -> case a1 of wild2 { GHC.Types.I# x1 ->
+                           case b1 of wild3 { GHC.Types.I# y1 ->
+                           case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.<=# x1 y1) of wild4 {
+                             GHC.Types.False -> wild1 GHC.Types.True -> wild } } } }
+                   Lang.B a1
+                   -> case y of wild1 {
+                        Lang.I ds -> wild1
+                        Lang.B b1
+                        -> case a1 of wild2 {
+                             GHC.Types.False -> case b1 of wild3 { DEFAULT -> wild }
+                             GHC.Types.True
+                             -> case b1 of wild3 {
+                                  GHC.Types.False -> wild1 GHC.Types.True -> wild } }
+                        Lang.NoOp -> wild }
+                   Lang.NoOp -> y }) -}
+3505277d5da6bcb9e418543375d4232a
+  $fShowPrims :: GHC.Show.Show Lang.Prims
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Prims
+                  Lang.$fShowPrims_$cshowsPrec
+                  Lang.$fShowPrims_$cshow
+                  Lang.$fShowPrims_$cshowList -}
+3505277d5da6bcb9e418543375d4232a
+  $fShowPrims1 :: Lang.Prims -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (Lang.$fShowPrims_$cshowsPrec Lang.$fShowPrims_i) -}
+b25b938d2789e7d2a22e1fb5781f0a60
+  $fShowPrims2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "NoOp"#) -}
+4790ff47fe1f977e9ff69e7915c88e9a
+  $fShowPrims3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "B "#) -}
+8c36ace1cf9c970791122bbf0320fe6d
+  $fShowPrims4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "I "#) -}
+3505277d5da6bcb9e418543375d4232a
+  $fShowPrims_$cshow :: Lang.Prims -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: Lang.Prims) ->
+                 Lang.$fShowPrims_$cshowsPrec
+                   GHC.Show.shows22
+                   x
+                   (GHC.Types.[] @ GHC.Types.Char)) -}
+3505277d5da6bcb9e418543375d4232a
+  $fShowPrims_$cshowList :: [Lang.Prims] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__ @ Lang.Prims Lang.$fShowPrims1) -}
+3505277d5da6bcb9e418543375d4232a
+  $fShowPrims_$cshowsPrec ::
+    GHC.Types.Int -> Lang.Prims -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,1*U(U)><S,1*U><L,U>,
+     Unfolding: (\ (a :: GHC.Types.Int)
+                   (ds :: Lang.Prims)
+                   (eta :: GHC.Base.String) ->
+                 case ds of wild {
+                   Lang.I b1
+                   -> case a of wild1 { GHC.Types.I# x ->
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# x 11#) of wild2 {
+                        GHC.Types.False
+                        -> GHC.Base.++
+                             @ GHC.Types.Char
+                             Lang.$fShowPrims4
+                             (case b1 of ww2 { GHC.Types.I# ww3 ->
+                              case GHC.Show.$wshowSignedInt 11# ww3 eta of ww4 { (#,#) ww5 ww6 ->
+                              GHC.Types.: @ GHC.Types.Char ww5 ww6 } })
+                        GHC.Types.True
+                        -> GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.shows7
+                             (GHC.Base.++
+                                @ GHC.Types.Char
+                                Lang.$fShowPrims4
+                                (case b1 of ww2 { GHC.Types.I# ww3 ->
+                                 case GHC.Show.$wshowSignedInt
+                                        11#
+                                        ww3
+                                        (GHC.Types.:
+                                           @ GHC.Types.Char
+                                           GHC.Show.shows4
+                                           eta) of ww4 { (#,#) ww5 ww6 ->
+                                 GHC.Types.: @ GHC.Types.Char ww5 ww6 } })) } }
+                   Lang.B b1
+                   -> case a of wild1 { GHC.Types.I# x ->
+                      let {
+                        p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,1*U> -}
+                        = \ (x1 :: GHC.Base.String)[OneShot] ->
+                          GHC.Base.++
+                            @ GHC.Types.Char
+                            Lang.$fShowPrims3
+                            (case b1 of wild2 {
+                               GHC.Types.False -> GHC.Base.++ @ GHC.Types.Char GHC.Show.shows18 x1
+                               GHC.Types.True
+                               -> GHC.Base.++ @ GHC.Types.Char GHC.Show.shows17 x1 })
+                      } in
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# x 11#) of wild2 {
+                        GHC.Types.False -> p eta
+                        GHC.Types.True
+                        -> GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.shows7
+                             (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows4 eta)) } }
+                   Lang.NoOp
+                   -> GHC.Base.++ @ GHC.Types.Char Lang.$fShowPrims2 eta }) -}
+ae7d372869922fa8df844160033adfa3
+  $fShowPrims_i :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
+124d904b38d11432b8c436065c74734e
+  $fStmtEval :: Lang.Stmt Lang.Eval
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lang.Eval
+                  Lang.$fStmtEval_$cvar
+                  Lang.$fStmtEval_$clet_
+                  Lang.$fStmtEval_$cif_
+                  Lang.$fStmtEval_$cwhile
+                  Lang.$fStmtEval_$cseq
+                  Lang.$fStmtEval_$cskip -}
+aaaadca680074fd5e1e81f2e8967d5d6
+  $fStmtEval1 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (s :: Lang.VarStore Lang.Prims) -> (s, Lang.NoOp)) -}
+a49ff98332d04a257b12e07c11a6b092
+  $fStmtEval2 ::
+    Lang.Eval a
+    -> Lang.Eval b
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U(1*U,A))><L,1*C1(U(U,U))><L,U>m,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   @ b
+                   (ds :: Lang.Eval a)
+                   (ds1 :: Lang.Eval b)
+                   (s :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds2 :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                   = ds1 `cast` (Lang.N:Eval[0] <b>_P)
+                       (case ds `cast` (Lang.N:Eval[0] <a>_P) s of wild { (,) s1 r1 ->
+                        s1 })
+                 } in
+                 (case ds2 of wild { (,) s2 r2 -> s2 },
+                  case ds2 of wild { (,) s2 r2 -> r2 })) -}
+63557e2811678d8adc626086f6dce331
+  $fStmtEval3 ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval a
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 3,
+     Strictness: <C(S(LS)),C(U(U,1*U))><L,C(U(1*U,A))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   (w :: Lang.Eval GHC.Types.Bool)
+                   (w1 :: Lang.Eval a)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cwhile @ a w w1 w2 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+652a7744f4153c73344361c1edb47607
+  $fStmtEval4 ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval a
+    -> Lang.Eval a
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 4,
+     Strictness: <C(S(LS)),1*C1(U(U,1*U))><L,1*C1(U(U,U))><L,1*C1(U(U,U))><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (4, True, False)
+                (\ @ a
+                   (w :: Lang.Eval GHC.Types.Bool)
+                   (w1 :: Lang.Eval a)
+                   (w2 :: Lang.Eval a)
+                   (w3 :: Lang.VarStore Lang.Prims) ->
+                 case w `cast` (Lang.N:Eval[0] <GHC.Types.Bool>_P)
+                        w3 of wild { (,) s1 ds ->
+                 case ds of wild1 {
+                   DEFAULT
+                   -> case Lang.$fStmtEval5
+                      ret_ty (Lang.VarStore Lang.Prims, Lang.Prims)
+                      of {}
+                   Lang.B rc
+                   -> case rc of wild2 {
+                        GHC.Types.False
+                        -> let {
+                             ds1 :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                             = w2 `cast` (Lang.N:Eval[0] <a>_P) s1
+                           } in
+                           (case ds1 of wild3 { (,) s3 re -> s3 },
+                            case ds1 of wild3 { (,) s3 re -> re })
+                        GHC.Types.True
+                        -> let {
+                             ds1 :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                             = w1 `cast` (Lang.N:Eval[0] <a>_P) s1
+                           } in
+                           (case ds1 of wild3 { (,) s2 rt -> s2 },
+                            case ds1 of wild3 { (,) s2 rt -> rt }) } } }) -}
+d0e31d99be3cd1aaae15de86febe01a0
+  $fStmtEval5 :: (Lang.VarStore Lang.Prims, GHC.Types.Bool)
+  {- Strictness: x -}
+607771b20292f9929b7e7fe324950574
+  $fStmtEval6 ::
+    GHC.Base.String
+    -> Lang.Eval a
+    -> Lang.VarStore Lang.Prims
+    -> (Data.Map.Base.Map GHC.Base.String Lang.Prims, Lang.Prims)
+  {- Arity: 3, Strictness: <L,1*U><L,1*C1(U(1*U,U))><L,U>m,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   @ b
+                   (v :: GHC.Base.String)
+                   (ds :: Lang.Eval a)
+                   (s :: Lang.VarStore Lang.Prims) ->
+                 (case ds `cast` (Lang.N:Eval[0] <a>_P) s of wild { (,) s1 r ->
+                  Lang.$fStmtEval_$sgo10 @ Lang.Prims v r s1 },
+                  Lang.NoOp)) -}
+812f14aa04856a7e217f9521050eb480
+  $fStmtEval7 ::
+    GHC.Base.String
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 2, Strictness: <L,1*U><L,U>m,
+     Unfolding: InlineRule (2, True, False)
+                (\ @ a (v :: GHC.Base.String) (s :: Lang.VarStore Lang.Prims) ->
+                 (s, Lang.$fStmtEval8 @ Lang.Prims v s)) -}
+a629f99fe74a23d77d6f2f2fbf800ab4
+  $fStmtEval8 ::
+    GHC.Base.String -> Data.Map.Base.Map GHC.Base.String a -> a
+  {- Arity: 2, Strictness: <S,1*U><S,1*U> -}
+9cf7f5ff9771391379e83d4d1e1597f3
+  $fStmtEval_$cif_ ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval a -> Lang.Eval a -> Lang.Eval a
+  {- Arity: 4,
+     Strictness: <C(S(LS)),1*C1(U(U,1*U))><L,1*C1(U(U,U))><L,1*C1(U(U,U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fStmtEval4
+                  `cast`
+                (forall (a :: <*>_N).
+                 <Lang.Eval GHC.Types.Bool>_R
+                 ->_R <Lang.Eval a>_R
+                 ->_R <Lang.Eval a>_R
+                 ->_R Sym (Lang.N:Eval[0] <a>_P)) -}
+cf8388130d455283d67bfffd16c6b94a
+  $fStmtEval_$clet_ :: GHC.Base.String -> Lang.Eval a -> Lang.Eval b
+  {- Arity: 3, Strictness: <L,1*U><L,1*C1(U(1*U,U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fStmtEval6
+                  `cast`
+                (forall (a :: <*>_N) (b :: <*>_N).
+                 <GHC.Base.String>_R
+                 ->_R <Lang.Eval a>_R
+                 ->_R Sym (Lang.N:Eval[0] <b>_P)) -}
+87241296eba24e7e5af6eda77a6e4a07
+  $fStmtEval_$cseq :: Lang.Eval a -> Lang.Eval b -> Lang.Eval b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U(1*U,A))><L,1*C1(U(U,U))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fStmtEval2
+                  `cast`
+                (forall (a :: <*>_N) (b :: <*>_N).
+                 <Lang.Eval a>_R
+                 ->_R <Lang.Eval b>_R
+                 ->_R Sym (Lang.N:Eval[0] <b>_P)) -}
+fa89dc37c97891ec1eecea51156e02f9
+  $fStmtEval_$cskip :: Lang.Eval a
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                (\ @ a -> Lang.$fStmtEval1)
+                  `cast`
+                (forall (a :: <*>_N). Sym (Lang.N:Eval[0] <a>_P)) -}
+8421145fbd55445f2328defe24ab75f9
+  $fStmtEval_$cvar :: GHC.Base.String -> Lang.Eval a
+  {- Arity: 2, Strictness: <L,1*U><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fStmtEval7
+                  `cast`
+                (forall (a :: <*>_N).
+                 <GHC.Base.String>_R ->_R Sym (Lang.N:Eval[0] <a>_P)) -}
+5c615222158fd69f2d81919a7dc44cbe
+  $fStmtEval_$cwhile ::
+    Lang.Eval GHC.Types.Bool -> Lang.Eval a -> Lang.Eval a
+  {- Arity: 3,
+     Strictness: <C(S(LS)),C(U(U,1*U))><L,C(U(1*U,A))><L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.$fStmtEval3
+                  `cast`
+                (forall (a :: <*>_N).
+                 <Lang.Eval GHC.Types.Bool>_R
+                 ->_R <Lang.Eval a>_R
+                 ->_R Sym (Lang.N:Eval[0] <a>_P)) -}
+0beea7163d16333aa7e79af92b86fb64
+  $fStmtEval_$sgo10 ::
+    GHC.Base.String
+    -> a1
+    -> Data.Map.Base.Map GHC.Base.String a1
+    -> Data.Map.Base.Map GHC.Base.String a1
+  {- Arity: 3, Strictness: <S,1*U><L,U><S,1*U> -}
+9685a664309ba8706b82b1c188ed342a
+  $tc'B :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11820218519562407112##
+                   14683102189167828216##
+                   Lang.$trModule
+                   Lang.$tc'B1) -}
+914c9f9325aa49186d61529d397dd950
+  $tc'B1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'B"#) -}
+adc964acf6f723688f8143b84379b5bb
+  $tc'C:ArExpr :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11908312424011745072##
+                   16641209023395004377##
+                   Lang.$trModule
+                   Lang.$tc'C:ArExpr1) -}
+58c1b1b9bda90378977906a972538e8c
+  $tc'C:ArExpr1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'C:ArExpr"#) -}
+8255cdc9bd1361fc457bf97c3dd7e633
+  $tc'C:BoolExpr :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9072692981663418072##
+                   14138489705996951043##
+                   Lang.$trModule
+                   Lang.$tc'C:BoolExpr1) -}
+9aa9ef542368e576b2a547045726d99f
+  $tc'C:BoolExpr1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'C:BoolExpr"#) -}
+ed48b67531894bbe9066376a964b30d7
+  $tc'C:Stmt :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16039876280443125271##
+                   2771406767269426372##
+                   Lang.$trModule
+                   Lang.$tc'C:Stmt1) -}
+b303e732677257b219065c5e73baddca
+  $tc'C:Stmt1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'C:Stmt"#) -}
+4ef0307da88828d3320bbf7ed009fe50
+  $tc'Eval :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   414860987496723579##
+                   17413138143487754167##
+                   Lang.$trModule
+                   Lang.$tc'Eval1) -}
+27560f981f91d5955827fb51b1f8cf2a
+  $tc'Eval1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'Eval"#) -}
+55aaa589cbf2f34a306ad702c8f10ad1
+  $tc'I :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7160127393142590509##
+                   7961653046275795338##
+                   Lang.$trModule
+                   Lang.$tc'I1) -}
+06df16b38ffe1c551f522909cc7262bb
+  $tc'I1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'I"#) -}
+b81f7f6f26e44e02fe7f496e26c7e1a2
+  $tc'NoOp :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6174135878527279740##
+                   10481659003271789314##
+                   Lang.$trModule
+                   Lang.$tc'NoOp1) -}
+cc9583a19461323ea0c4e8e987b00c2a
+  $tc'NoOp1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'NoOp"#) -}
+59d8a60f44cae7a163f1d4b092e23889
+  $tcArExpr :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2483688330593080075##
+                   14013436962266248711##
+                   Lang.$trModule
+                   Lang.$tcArExpr1) -}
+b152d00cff58f3d23487c0a90cbba4ca
+  $tcArExpr1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "ArExpr"#) -}
+c829cc9152a86535e7a9242ae68f8251
+  $tcBoolExpr :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12136405270727275901##
+                   17235963467420304803##
+                   Lang.$trModule
+                   Lang.$tcBoolExpr1) -}
+f74f0048c6c6cf0cc260fb3896118d75
+  $tcBoolExpr1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "BoolExpr"#) -}
+8f68819aed9542fa0cca4308ceb3c2a6
+  $tcEval :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16740758025754780682##
+                   403923301028186911##
+                   Lang.$trModule
+                   Lang.$tcEval1) -}
+2e7fa88569f0a5c6f92ddca54c781211
+  $tcEval1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Eval"#) -}
+84464b805e07dcaa60ac0a0d2b2f0f65
+  $tcPrims :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11300172958960010725##
+                   13117799537336115726##
+                   Lang.$trModule
+                   Lang.$tcPrims1) -}
+1771f233674c24a5d3f6acb5c0d59caa
+  $tcPrims1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Prims"#) -}
+0647ebb3d7c15355f47e7629532f8ffe
+  $tcStmt :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3762290123173654755##
+                   6155364445097172102##
+                   Lang.$trModule
+                   Lang.$tcStmt1) -}
+28405ed1bddbef6b98c5a6ea5802bbbf
+  $tcStmt1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Stmt"#) -}
+6de5f8a402a41812f171240a3b77ab65
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module Lang.$trModule2 Lang.$trModule1) -}
+77251af034f8089396938688fdfc8720
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Lang"#) -}
+daa833372d83c96f1ac477b45555db20
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS
+                   "FinallyTagless-0.1.0.0-IYylgWihXo27eRWIlROeOz"#) -}
+989938adb61d72b03874a02184ae2c1d
+  $w$cadd ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w1 `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s2 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval18 Lang.I r2 -> (s2, r2) } }
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s1 ds2 ->
+                     case ds2 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval17 Lang.I r1 -> (s1, r1) } }
+                 } in
+                 (# case ds1 of ds2 { (,) s1 r1 ->
+                    case s1 of wild {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of ds3 { (,) s2 r2 ->
+                         case s2 of wild1 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild } }
+                      Data.Map.Base.Tip -> case ds of ds3 { (,) s2 r2 -> s2 } } },
+                    Lang.I
+                      (case ds1 of ds2 { (,) s1 r1 ->
+                       case r1 of wild { GHC.Types.I# x ->
+                       case ds of ds3 { (,) s2 r2 ->
+                       case r2 of wild1 { GHC.Types.I# y ->
+                       GHC.Types.I# (GHC.Prim.+# x y) } } } }) #)) -}
+e77dc972c5bdc084f4aa4d8add8ff0fa
+  $w$cbEq ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval GHC.Types.Bool
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,U))><L,1*C1(U(U,U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Bool)
+                   (w1 :: Lang.Eval GHC.Types.Bool)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                   = w1 `cast` (Lang.N:Eval[0] <GHC.Types.Bool>_P) w2
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                   = w `cast` (Lang.N:Eval[0] <GHC.Types.Bool>_P) w2
+                 } in
+                 (# case ds1 of wild { (,) s1 r1 ->
+                    case s1 of wild1 {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of wild2 { (,) s2 r2 ->
+                         case s2 of wild3 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild1 } }
+                      Data.Map.Base.Tip -> case ds of wild2 { (,) s2 r2 -> s2 } } },
+                    Lang.B
+                      (case ds1 of wild { (,) s1 r1 ->
+                       case ds of wild1 { (,) s2 r2 ->
+                       Lang.$fBoolExprEval_$c== r1 r2 } }) #)) -}
+0ce314184d50668981f4a2e99e9cffea
+  $w$cdiv_ ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w1 `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s2 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval9 Lang.I r2 -> (s2, r2) } }
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s1 ds2 ->
+                     case ds2 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval8 Lang.I r1 -> (s1, r1) } }
+                 } in
+                 (# case ds1 of ds2 { (,) s1 r1 ->
+                    case s1 of wild {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of ds3 { (,) s2 r2 ->
+                         case s2 of wild1 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild } }
+                      Data.Map.Base.Tip -> case ds of ds3 { (,) s2 r2 -> s2 } } },
+                    Lang.I
+                      (case ds1 of ds2 { (,) s1 r1 ->
+                       case ds of ds3 { (,) s2 r2 ->
+                       GHC.Real.$fIntegralInt_$cdiv r1 r2 } }) #)) -}
+4384eaac1e0dff153029299b575c2eb4
+  $w$ceq ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w1 `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s2 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval6 Lang.I r2 -> (s2, r2) } }
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s1 ds2 ->
+                     case ds2 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval5 Lang.I r1 -> (s1, r1) } }
+                 } in
+                 (# case ds1 of ds2 { (,) s1 r1 ->
+                    case s1 of wild {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of ds3 { (,) s2 r2 ->
+                         case s2 of wild1 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild } }
+                      Data.Map.Base.Tip -> case ds of ds3 { (,) s2 r2 -> s2 } } },
+                    Lang.B
+                      (case ds1 of ds2 { (,) s1 r1 ->
+                       case ds of ds3 { (,) s2 r2 -> GHC.Classes.eqInt r1 r2 } }) #)) -}
+536a471906cd77e6ad67c859dedb39ed
+  $w$clte ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w1 `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s2 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval3 Lang.I r2 -> (s2, r2) } }
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s1 ds2 ->
+                     case ds2 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval2 Lang.I r1 -> (s1, r1) } }
+                 } in
+                 (# case ds1 of ds2 { (,) s1 r1 ->
+                    case s1 of wild {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of ds3 { (,) s2 r2 ->
+                         case s2 of wild1 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild } }
+                      Data.Map.Base.Tip -> case ds of ds3 { (,) s2 r2 -> s2 } } },
+                    Lang.B
+                      (case ds1 of ds2 { (,) s1 r1 ->
+                       case ds of ds3 { (,) s2 r2 -> GHC.Classes.leInt r1 r2 } }) #)) -}
+51dc010eb6673a5a376f8eafa42f8173
+  $w$cmul ::
+    Lang.Eval GHC.Types.Int
+    -> Lang.Eval GHC.Types.Int
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3, Strictness: <L,1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><L,U>,
+     Inline: [0],
+     Unfolding: (\ (w :: Lang.Eval GHC.Types.Int)
+                   (w1 :: Lang.Eval GHC.Types.Int)
+                   (w2 :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w1 `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s2 ds1 ->
+                     case ds1 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval12 Lang.I r2 -> (s2, r2) } }
+                 } in
+                 let {
+                   ds1 :: (Lang.VarStore Lang.Prims, GHC.Types.Int)
+                   = case w `cast` (Lang.N:Eval[0] <GHC.Types.Int>_P)
+                            w2 of wild { (,) s1 ds2 ->
+                     case ds2 of wild1 {
+                       DEFAULT -> Lang.$fArExprEval11 Lang.I r1 -> (s1, r1) } }
+                 } in
+                 (# case ds1 of ds2 { (,) s1 r1 ->
+                    case s1 of wild {
+                      Data.Map.Base.Bin ipv ipv1 ipv2 ipv3 ipv4
+                      -> case ds of ds3 { (,) s2 r2 ->
+                         case s2 of wild1 {
+                           Data.Map.Base.Bin ipv5 ipv6 ipv7 ipv8 ipv9
+                           -> Data.Map.Base.union_$shedgeUnion
+                                @ Lang.Prims
+                                @ [GHC.Types.Char]
+                                ipv5
+                                ipv6
+                                ipv7
+                                ipv8
+                                ipv9
+                                ipv
+                                ipv1
+                                ipv2
+                                ipv3
+                                ipv4
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                (Data.Map.Base.NothingS @ [GHC.Types.Char])
+                                GHC.Classes.$fOrd[]_$s$fOrd[]1
+                           Data.Map.Base.Tip -> wild } }
+                      Data.Map.Base.Tip -> case ds of ds3 { (,) s2 r2 -> s2 } } },
+                    Lang.I
+                      (case ds1 of ds2 { (,) s1 r1 ->
+                       case r1 of wild { GHC.Types.I# x ->
+                       case ds of ds3 { (,) s2 r2 ->
+                       case r2 of wild1 { GHC.Types.I# y ->
+                       GHC.Types.I# (GHC.Prim.*# x y) } } } }) #)) -}
+43be543e5877bf17291aa13fc5efc2cf
+  $w$cwhile ::
+    Lang.Eval GHC.Types.Bool
+    -> Lang.Eval a
+    -> Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 3,
+     Strictness: <C(S(LS)),C(U(U,1*U))><L,C(U(1*U,A))><L,U>,
+     Inline: [0] -}
+b95bf9ce20091b867cae40503075cd4c
+  $wifTest ::
+    Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 1, Strictness: <L,U>, Inline: [0],
+     Unfolding: (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$cbEq
+                        Lang.$fBoolExprEval6
+                          `cast`
+                        (Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P))
+                        Lang.$fBoolExprEval4
+                          `cast`
+                        (Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P))
+                        w of ww { (#,#) ww1 ww2 ->
+                 case ww2 of wild {
+                   DEFAULT
+                   -> case Lang.$fStmtEval5
+                      ret_ty (# Lang.VarStore Lang.Prims, Lang.Prims #)
+                      of {}
+                   Lang.B rc
+                   -> case rc of wild1 {
+                        GHC.Types.False
+                        -> let {
+                             ds :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                             = case Lang.$w$cadd
+                                      Lang.ifTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                      Lang.ifTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                      ww1 of ww3 { (#,#) ww4 ww5 ->
+                               (ww4, ww5) }
+                           } in
+                           (# case ds of wild2 { (,) s3 re -> s3 },
+                              case ds of wild2 { (,) s3 re -> re } #)
+                        GHC.Types.True
+                        -> let {
+                             ds :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                             = case Lang.$w$cadd
+                                      Lang.ifTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                      Lang.ifTest2 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                      ww1 of ww3 { (#,#) ww4 ww5 ->
+                               (ww4, ww5) }
+                           } in
+                           (# case ds of wild2 { (,) s2 rt -> s2 },
+                              case ds of wild2 { (,) s2 rt -> rt } #) } } }) -}
+33437876149adafdefb033dd40b3e256
+  $wletTest ::
+    Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 1, Strictness: <L,U>, Inline: [0],
+     Unfolding: (\ (w :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   s1 :: Lang.VarStore Lang.Prims
+                   = case Lang.$w$cadd
+                            Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                            Lang.ifTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                            (case Lang.$w$cadd
+                                    Lang.ifTest2 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                    Lang.letTest2 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                                    w of ww { (#,#) ww1 ww2 ->
+                             Lang.$fStmtEval_$sgo10
+                               @ Lang.Prims
+                               Lang.letTest_v
+                               ww2
+                               ww1 }) of ww { (#,#) ww1 ww2 ->
+                     Lang.$fStmtEval_$sgo10 @ Lang.Prims Lang.letTest_v ww2 ww1 }
+                 } in
+                 (# s1, Lang.$fStmtEval8 @ Lang.Prims Lang.letTest_v s1 #)) -}
+03b57fb1a65e05ca73108b82354b44e5
+  $wseqTest ::
+    Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 1, Strictness: <L,1*U>, Inline: [0],
+     Unfolding: (\ (w :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                   = case Lang.$w$cadd
+                            Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                            Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                            (Lang.$fStmtEval_$sgo10
+                               @ Lang.Prims
+                               Lang.letTest_v
+                               Lang.seqTest2
+                               w) of ww { (#,#) ww1 ww2 ->
+                     (ww1, ww2) }
+                 } in
+                 (# case ds of wild { (,) s2 r2 -> s2 },
+                    case ds of wild { (,) s2 r2 -> r2 } #)) -}
+300cb3ac7cc6b143c62e80077dd5face
+  $wwhileTest ::
+    Lang.VarStore Lang.Prims
+    -> (# Lang.VarStore Lang.Prims, Lang.Prims #)
+  {- Arity: 1, Strictness: <L,1*U>, Inline: [0],
+     Unfolding: (\ (w :: Lang.VarStore Lang.Prims) ->
+                 let {
+                   ds :: (Lang.VarStore Lang.Prims, Lang.Prims)
+                   = case Lang.$w$cwhile
+                            @ GHC.Types.Int
+                            Lang.whileTest4 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Bool>_P))
+                            Lang.whileTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                            (Lang.$fStmtEval_$sgo10
+                               @ Lang.Prims
+                               Lang.letTest_v
+                               Lang.whileTest2
+                               w) of ww { (#,#) ww1 ww2 ->
+                     (ww1, ww2) }
+                 } in
+                 (# case ds of wild { (,) s2 r2 -> s2 },
+                    case ds of wild { (,) s2 r2 -> r2 } #)) -}
+083f228bc91c26e97a10043309cb687d
+  class ArExpr (a :: * -> *) where
+    lit :: GHC.Types.Int -> a GHC.Types.Int
+    neg :: a GHC.Types.Int -> a GHC.Types.Int
+    add :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Int
+    sub :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Int
+    mul :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Int
+    div_ :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Int
+    eq :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Bool
+    lte :: a GHC.Types.Int -> a GHC.Types.Int -> a GHC.Types.Bool
+    {-# MINIMAL lit, neg, add, sub, mul, div_, eq, lte #-}
+f45ae526d1e3e4085698c8837292aaf7
+  class BoolExpr (b :: * -> *) where
+    tru :: b GHC.Types.Bool
+    fls :: b GHC.Types.Bool
+    bEq :: b GHC.Types.Bool -> b GHC.Types.Bool -> b GHC.Types.Bool
+    bnot :: b GHC.Types.Bool -> b GHC.Types.Bool
+    {-# MINIMAL tru, fls, bEq, bnot #-}
+79dee79773ecce7f5c99acd1ccf28add
+  type role Eval phantom
+  newtype Eval a
+    = Eval {runEval :: Lang.VarStore Lang.Prims
+                       -> (Lang.VarStore Lang.Prims, Lang.Prims)}
+3505277d5da6bcb9e418543375d4232a
+  data Prims = I GHC.Types.Int | B GHC.Types.Bool | NoOp
+124d904b38d11432b8c436065c74734e
+  class Stmt (r :: * -> *) where
+    var :: GHC.Base.String -> r a
+    let_ :: GHC.Base.String -> r a -> r b
+    if_ :: r GHC.Types.Bool -> r a -> r a -> r a
+    while :: r GHC.Types.Bool -> r a -> r a
+    seq :: r a -> r b -> r b
+    skip :: r a
+    {-# MINIMAL var, let_, if_, while, seq, skip #-}
+2211fa2a3fab5c7659cf30de51231cee
+  type VarStore a = Data.Map.Base.Map GHC.Base.String a
+2f99664351e9f7a994491cbb1abc1964
+  emptyState :: Lang.VarStore Lang.Prims
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (Data.Map.Base.Bin
+                   @ [GHC.Types.Char]
+                   @ Lang.Prims
+                   1#
+                   (GHC.Types.[] @ GHC.Types.Char)
+                   Lang.NoOp
+                   (Data.Map.Base.Tip @ [GHC.Types.Char] @ Lang.Prims)
+                   (Data.Map.Base.Tip @ [GHC.Types.Char] @ Lang.Prims)) -}
+75f09d7e3a005a4a49c49f6b22126405
+  ifTest :: Lang.Eval GHC.Types.Int
+  {- Arity: 1, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.ifTest1 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+76bd82bdc6f48f2e75bc757aade4f76d
+  ifTest1 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$wifTest w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+96821cdd1d670a55d92ecd9e5b044e0b
+  ifTest2 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: Lang.VarStore Lang.Prims) ->
+                 (eta, Lang.I Lang.ifTest_i)) -}
+51753a2aef4fa94acb43b9e9d9b2fa51
+  ifTest3 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: Lang.VarStore Lang.Prims) ->
+                 (eta, Lang.I Lang.ifTest_i1)) -}
+b2655a4bddf66b3c5f0fe9cf843c0d22
+  ifTest_i :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 2#) -}
+0754402a5a54ea35669a5a08173a2dd8
+  ifTest_i1 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 1#) -}
+8237553a9918316de0b359545ea397ac
+  letTest :: Lang.Eval GHC.Types.Int
+  {- Arity: 1, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.letTest1 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+30ec252cd18d0ac382cf3e60e6feb995
+  letTest1 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$wletTest w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+2cf34830d1af87837f6dcda9758ccb97
+  letTest2 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: Lang.VarStore Lang.Prims) ->
+                 (eta, Lang.I Lang.letTest_i)) -}
+597d97e01cbe2b82819cbe7958ce71ba
+  letTest3 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (s :: Lang.VarStore Lang.Prims) ->
+                 (s, Lang.$fStmtEval8 @ Lang.Prims Lang.letTest_v s)) -}
+0bf4b3cd2b15152e7f4b7ce46932e2e6
+  letTest_i :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 3#) -}
+2bf87530e74794bc6567460c6d716c60
+  letTest_v :: GHC.Base.String
+  {- Unfolding: (GHC.CString.unpackCString# "x"#) -}
+9f45c22c56d1c663ef4afb281da63d78
+  runEval ::
+    Lang.Eval a
+    -> Lang.VarStore Lang.Prims
+    -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  RecSel Left Lang.Eval
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (0, True, True)
+                Lang.runEval1
+                  `cast`
+                (forall (a :: <*>_N). <Lang.Eval a>_R ->_R Lang.N:Eval[0] <a>_P) -}
+43455adec7c1dfd3c64401f69e5cbfa1
+  runEval1 :: Lang.Eval a -> Lang.Eval a
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, True)
+                (\ @ a (ds :: Lang.Eval a) -> ds) -}
+6b06ed1fe929aad5976be26eefe3ce7d
+  seqTest :: Lang.Eval GHC.Types.Int
+  {- Arity: 1, Strictness: <L,1*U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.seqTest1 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+aeb1347e5eabcafe6120f0f973657280
+  seqTest1 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,1*U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$wseqTest w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+96969443ef5ca6f1cdc309d7bd4a5c97
+  seqTest2 :: Lang.Prims
+  {- HasNoCafRefs, Unfolding: (Lang.I Lang.seqTest_i) -}
+bc5f8cf400e1fc2a187b11874a6eedd1
+  seqTest_i :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 100#) -}
+58ba6b7934d0ef70aba8fc8c8bea34de
+  varTest :: Lang.Eval GHC.Types.Int
+  {- Arity: 1, Strictness: <L,U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+af221b9275473d824a3f9042712090e4
+  whileTest :: Lang.Eval GHC.Types.Int
+  {- Arity: 1, Strictness: <L,1*U>m,
+     Unfolding: InlineRule (0, True, True)
+                Lang.whileTest1 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P)) -}
+1dbf291c62233944b574e93b516ff3ee
+  whileTest1 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,1*U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$wwhileTest w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+93f8bc9468ad28535befb4b48fb5b2e1
+  whileTest2 :: Lang.Prims
+  {- HasNoCafRefs, Unfolding: (Lang.I Lang.$fShowPrims_i) -}
+893bd69fbd187a299d8d16635fb5c922
+  whileTest3 ::
+    Lang.VarStore Lang.Prims
+    -> (Data.Map.Base.Map GHC.Base.String Lang.Prims, Lang.Prims)
+  {- Arity: 1, Strictness: <L,U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: Lang.VarStore Lang.Prims) ->
+                 (case Lang.$w$cadd
+                         Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                         Lang.ifTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                         w of ww { (#,#) ww1 ww2 ->
+                  Lang.$fStmtEval_$sgo10 @ Lang.Prims Lang.letTest_v ww2 ww1 },
+                  Lang.NoOp)) -}
+d9dbff53bf8af0b8b81b0a356106ce8e
+  whileTest4 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1,
+     Unfolding: (\ (w :: Lang.VarStore Lang.Prims) ->
+                 case Lang.$w$clte
+                        Lang.letTest3 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                        Lang.whileTest5 `cast` (Sym (Lang.N:Eval[0] <GHC.Types.Int>_P))
+                        w of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+ca6eea63790658a26d114cce4310986f
+  whileTest5 ::
+    Lang.VarStore Lang.Prims -> (Lang.VarStore Lang.Prims, Lang.Prims)
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: Lang.VarStore Lang.Prims) ->
+                 (eta, Lang.I Lang.whileTest_i)) -}
+b614a51bb477abc5fd11d064a587ff24
+  whileTest_i :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 10#) -}
+instance [safe] Lang.ArExpr [Lang.Eval] = Lang.$fArExprEval
+instance [safe] Lang.BoolExpr [Lang.Eval] = Lang.$fBoolExprEval
+instance [safe] GHC.Classes.Eq [Lang.Prims] = Lang.$fEqPrims
+instance [safe] GHC.Classes.Ord [Lang.Prims] = Lang.$fOrdPrims
+instance [safe] GHC.Show.Show [Lang.Prims] = Lang.$fShowPrims
+instance [safe] Lang.Stmt [Lang.Eval] = Lang.$fStmtEval
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
