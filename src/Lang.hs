@@ -140,6 +140,88 @@ instance Stmt Eval where
 
   skip = Eval $ \s -> (s, NoOp)
 
+--------------------------------------------------------------------------------
+-- Extension in Data Constructor, adding Strings to the language
+--------------------------------------------------------------------------------
+data NewPrims = NI Int | NB Bool | S String | Skip
+  deriving (Eq, Show, Ord)
+
+-- | an eval monad, without all the sugar
+newtype NewEval a = NewEval {runNewEval :: VarStore NewPrims ->
+                                  (VarStore NewPrims, NewPrims)}
+
+-- | Bool instances
+instance BoolExpr NewEval where
+  tru = NewEval $ \s -> (s, NB True)
+  fls = NewEval $ \s -> (s, NB False)
+  bEq (NewEval j) (NewEval j') = NewEval $ \s ->
+    let (s1, r1) = j s
+        (s2, r2) = j' s
+    in (s1 `mappend` s2, NB $ r1 == r2)
+  bnot (NewEval j) = NewEval $ \x ->
+    let (s1, (NB r)) = j x
+    in (s1, NB $ not r)
+
+-- | Arithmetic instances
+instance ArExpr NewEval where
+  lit i = NewEval $ \s -> (s, NI i)
+  neg (NewEval j) = NewEval $ \s ->
+    let (s', NI r) = j s
+    in (s', NI $ negate r)
+
+  add (NewEval j) (NewEval k) = NewEval $ \s ->
+    let (s1, NI r1) = j s
+        (s2, NI r2) = k s
+    in (s1 `mappend` s2, NI $ r1 + r2)
+
+  sub x y = add x $ neg y
+
+  mul (NewEval j) (NewEval k) = NewEval $ \s ->
+    let (s1, NI r1) = j s
+        (s2, NI r2) = k s
+    in (s1 `mappend` s2, NI $ r1 * r2)
+
+  div_ (NewEval j) (NewEval k) = NewEval $ \s ->
+    let (s1, NI r1) = j s
+        (s2, NI r2) = k s
+    in (s1 `mappend` s2, NI $ div r1 r2)
+
+  eq (NewEval j) (NewEval k) = NewEval $ \s ->
+    let (s1, NI r1) = j s
+        (s2, NI r2) = k s
+        res = r1 == r2
+    in (s1 `mappend` s2, NB res)
+
+  lte (NewEval j) (NewEval k) = NewEval $ \s ->
+    let (s1, NI r1) = j s
+        (s2, NI r2) = k s
+    in (s1 `mappend` s2, NB $ r1 <= r2)
+
+-- | statement instance
+instance Stmt NewEval where
+  if_ (NewEval c) (NewEval t) (NewEval e) = NewEval $ \s ->
+    let (s1, NB rc) = c s
+        (s2, rt) = t s1
+        (s3, re) = e s1
+    in if rc
+       then (s2, rt) -- strict evaluations
+       else (s3, re)
+
+  while a b = if_ a (seq b (while a b)) skip
+
+  var v = NewEval $ \s -> (s, s M.! v) --an unhandled exception if var not in map
+
+  let_ v (NewEval x) = NewEval $ \s ->
+    let (s1, r) = x s
+    in (M.insert v r s1, Skip)
+
+  seq (NewEval a) (NewEval b) = NewEval $ \s ->
+    let (s1, _) = a s
+        (s2, r2) = b s1
+    in (s2, r2)
+
+  skip = NewEval $ \s -> (s, Skip)
+
 -- | Testing
 -- we can run this like so: runEval ifTest emptyState
 ifTest :: Eval Int
