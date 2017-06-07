@@ -25,31 +25,9 @@ an unwrapped state monad so the functions will be confusing if you are not
 familiar with the "under the hood" parts of monads.
 -}
 
--- | Begin the typeClasses!
-class BoolExpr b where
-  tru  :: b Bool
-  fls  :: b Bool
-  bEq  :: b Bool -> b Bool -> b Bool
-  bnot :: b Bool -> b Bool
-
-class ArExpr a where
-  lit  :: Int -> a Int
-  neg  :: a Int -> a Int
-  add  :: a Int -> a Int -> a Int
-  sub  :: a Int -> a Int -> a Int
-  mul  :: a Int -> a Int -> a Int
-  div_ :: a Int -> a Int -> a Int
-  eq   :: a Int -> a Int -> a Bool
-  lte  :: a Int -> a Int -> a Bool
-
-class Stmt r where
-  var   :: String -> r a
-  let_  :: String -> r a -> r b
-  if_   :: r Bool -> r a -> r a -> r a
-  while :: r Bool -> r a -> r a
-  seq   :: r a -> r b -> r b 
-  skip  :: r a
-
+--------------------------------------------------------------------------------
+-- Core Language
+--------------------------------------------------------------------------------
 -- | Primitive values that this language can use
 data Prims = I Int | B Bool | NoOp
   deriving (Eq, Show, Ord)
@@ -63,6 +41,34 @@ newtype Eval a = Eval {runEval :: VarStore Prims -> (VarStore Prims, Prims)}
 emptyState :: VarStore Prims
 emptyState = M.singleton "" NoOp
 
+-- | Boolean Expressions
+class BoolExpr b where
+  tru  :: b Bool
+  fls  :: b Bool
+  bEq  :: b Bool -> b Bool -> b Bool
+  bnot :: b Bool -> b Bool
+
+-- | Arithmetic Expressions
+class ArExpr a where
+  lit  :: Int -> a Int
+  neg  :: a Int -> a Int
+  add  :: a Int -> a Int -> a Int
+  sub  :: a Int -> a Int -> a Int
+  mul  :: a Int -> a Int -> a Int
+  div_ :: a Int -> a Int -> a Int
+  eq   :: a Int -> a Int -> a Bool
+  lte  :: a Int -> a Int -> a Bool
+
+-- | Statements
+class Stmt r where
+  var   :: String -> r a
+  let_  :: String -> r a -> r b
+  if_   :: r Bool -> r a -> r a -> r a
+  while :: r Bool -> r a -> r a
+  seq   :: r a -> r b -> r b 
+  skip  :: r a
+
+-- | Bool instances
 instance BoolExpr Eval where
   tru = Eval $ \s -> (s, B True)
   fls = Eval $ \s -> (s, B False)
@@ -74,6 +80,7 @@ instance BoolExpr Eval where
     let (s1, (B r)) = j x
     in (s1, B $ not r)
 
+-- | Arithmetic instances
 instance ArExpr Eval where
   lit i = Eval $ \s -> (s, I i)
   neg (Eval j) = Eval $ \s ->
@@ -106,8 +113,9 @@ instance ArExpr Eval where
   lte (Eval j) (Eval k) = Eval $ \s ->
     let (s1, I r1) = j s
         (s2, I r2) = k s
-    in (s1 `mappend` s2, B $ r1 <= r2) 
+    in (s1 `mappend` s2, B $ r1 <= r2)
 
+-- | statement instance
 instance Stmt Eval where
   if_ (Eval c) (Eval t) (Eval e) = Eval $ \s ->
     let (s1, B rc) = c s
@@ -130,7 +138,7 @@ instance Stmt Eval where
         (s2, r2) = b s1
     in (s2, r2)
 
-  skip = Eval $ \s -> (s, NoOp) 
+  skip = Eval $ \s -> (s, NoOp)
 
 -- | Testing
 -- we can run this like so: runEval ifTest emptyState
