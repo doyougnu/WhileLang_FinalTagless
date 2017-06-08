@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 module Lang where
 
@@ -37,8 +38,7 @@ data Prims = I Int | B Bool | NoOp
 -- | Map to hold let bound variables
 type VarStore a = M.Map String a
 
--- | an eval monad, without all the sugar
--- newtype Eval a = Eval {runEval :: VarStore Prims -> (VarStore Prims, Prims)}
+-- | an eval monad
 data Eval a = E (State (VarStore Prims) Prims)
 
 emptyState :: VarStore Prims
@@ -89,6 +89,7 @@ instance ArExpr Eval where
            return . I $ i'
   add x y  = wrapper (+) I x y
   div_ x y = wrapper (div) I x y
+  mul x y  = wrapper (*) I x y
   eq x y   = wrapper (==) B x y
   lte x y  = wrapper (<=) B x y
 
@@ -120,91 +121,77 @@ instance Stmt Eval where
 --------------------------------------------------------------------------------
 -- Extension in Data Constructor, adding Strings to the language
 --------------------------------------------------------------------------------
-data NewPrims = NI Int | NB Bool | S String | Skip -- addition in constructors
+data NewPrims = NI Int | NB Bool | S String | F Float | Skip -- addition in constructors
   deriving (Eq, Show, Ord)
 
--- | an eval monad, without all the sugar
-newtype NewEval a = NewEval {runNewEval :: VarStore NewPrims ->
-                                        (VarStore NewPrims, NewPrims)}
+-- | an new eval monad
+data NEval a = NE (State (VarStore NewPrims) NewPrims)
 
 nEmptyState :: VarStore NewPrims
 nEmptyState = M.singleton "" Skip
 
-instance StrExpr NewEval where  -- additional operator to handle strings
-  slit str = NewEval $ \s -> (s, S str)
+instance StrExpr NEval where  -- additional operator to handle strings
+  slit = NE . return . S
 
 --- The rest is the same
--- | Bool instances
-instance BoolExpr NewEval where
-  tru = NewEval $ \s -> (s, NB True)
-  fls = NewEval $ \s -> (s, NB False)
-  bEq (NewEval j) (NewEval j') = NewEval $ \s ->
-    let (s1, r1) = j s
-        (s2, r2) = j' s
-    in (s1 `mappend` s2, NB $ r1 == r2)
-  bnot (NewEval j) = NewEval $ \x ->
-    let (s1, NB r) = j x
-    in (s1, NB $ not r)
-
+instance BoolExpr NEval where 
+  tru = NE . return $ NB True
+  fls = NE . return $ NB False
+  bEq (NE j) (NE k) = NE e
+    where e = do
+          (NB x) <- j
+          (NB y) <- k
+          return . NB $ x == y
+  bnot (NE j) = NE e
+    where e = do
+          (NB b) <- j
+          return . NB $ b
+            
 -- | Arithmetic instances
-instance ArExpr NewEval where
-  lit i = NewEval $ \s -> (s, NI i)
-  neg (NewEval j) = NewEval $ \s ->
-    let (s', NI r) = j s
-    in (s', NI $ negate r)
+narHelper f c' (NE x) (NE y) = do
+  (NI x') <- x
+  (NI y') <- y
+  return . c' $ f x' y'
 
-  add (NewEval j) (NewEval k) = NewEval $ \s ->
-    let (s1, NI r1) = j s
-        (s2, NI r2) = k s
-    in (s1 `mappend` s2, NI $ r1 + r2)
+nwrapper f c' x y = NE e
+  where e = narHelper f c' x y
 
-  sub x y = add x $ neg y
+instance ArExpr NEval where
+  lit = NE . return . NI 
+  neg (NE i) = NE e
+    where e = do
+           (NI i') <- i
+           return . NI $ i'
+  add x y  = nwrapper (+) NI x y
+  div_ x y = nwrapper (div) NI x y
+  mul x y  = nwrapper (*) NI x y
+  eq x y   = nwrapper (==) NB x y
+  lte x y  = nwrapper (<=) NB x y
 
-  mul (NewEval j) (NewEval k) = NewEval $ \s ->
-    let (s1, NI r1) = j s
-        (s2, NI r2) = k s
-    in (s1 `mappend` s2, NI $ r1 * r2)
+-- -- | statement instance
+instance Stmt NEval where
+  if_ (NE c) (NE t) (NE e) = NE e 
+    where e = do
+            (NB c') <- c
+            t' <- t
+            e' <- e
+            return $ if c' then t' else e'
 
-  div_ (NewEval j) (NewEval k) = NewEval $ \s ->
-    let (s1, NI r1) = j s
-        (s2, NI r2) = k s
-    in (s1 `mappend` s2, NI $ div r1 r2)
+  var v = NE e --Cannot use bind or get, No instance declarations, because of general type
+    where e = do
+            st <- get
+            return $ st M.! v
 
-  eq (NewEval j) (NewEval k) = NewEval $ \s ->
-    let (s1, NI r1) = j s
-        (s2, NI r2) = k s
-        res = r1 == r2
-    in (s1 `mappend` s2, NB res)
+  let_ v (NE x) = NE e
+    where e = do
+            st <- get
+            x' <- x
+            put $ M.insert v x' st
+            return Skip
 
-  lte (NewEval j) (NewEval k) = NewEval $ \s ->
-    let (s1, NI r1) = j s
-        (s2, NI r2) = k s
-    in (s1 `mappend` s2, NB $ r1 <= r2)
+  seq (NE x) (NE y) = NE $ do x;y
 
--- | statement instance
-instance Stmt NewEval where
-  if_ (NewEval c) (NewEval t) (NewEval e) = NewEval $ \s ->
-    let (s1, NB rc) = c s
-        (s2, rt) = t s1
-        (s3, re) = e s1
-    in if rc
-       then (s2, rt) -- strict evaluations
-       else (s3, re)
-
-  while a b = if_ a (seq b (while a b)) skip
-
-  var v = NewEval $ \s -> (s, s M.! v) --an unhandled exception if var not in map
-
-  let_ v (NewEval x) = NewEval $ \s ->
-    let (s1, r) = x s
-    in (M.insert v r s1, Skip)
-
-  seq (NewEval a) (NewEval b) = NewEval $ \s ->
-    let (s1, r1) = a s
-        (s2, r2) = b s1
-    in (s2, r2)
-
-  skip = NewEval $ \s -> (s, Skip)
+  skip = NE $ return Skip
 
 -- | Compatible Extension for Lists
 
@@ -221,30 +208,40 @@ instance Stmt NewEval where
 -- Testing
 --------------------------------------------------------------------------------
 
--- -- we can run this like so: runEval ifTest emptyState
--- ifTest :: Eval Int
--- ifTest =  if_ (bEq tru fls) (add (lit 1) (lit 2)) (add (lit 1) (lit 1))
+-- we can run this like so: runEval ifTest emptyState
+ifTest :: Eval Int
+ifTest =  if_ (bEq tru fls) (add (lit 1) (lit 2)) (add (lit 1) (lit 1))
 
--- -- run like: runEval varTest (M.insert "x" (I 100) emptyState
--- varTest :: Eval Int
--- varTest = var "x"
+-- run like: runEval varTest (M.insert "x" (I 100) emptyState
+varTest :: Eval Int
+varTest = var "x"
 
--- stringTest :: NewEval String
--- stringTest = slit "what"
+stringTest :: NEval String
+stringTest = slit "what"
 
--- letStringTest :: NewEval String
--- letStringTest = seq (let_ "x" (slit "thisisx")) stringTest
+letStringTest :: NEval String
+letStringTest = seq (let_ "x" (slit "thisisx")) stringTest
 
--- letTest :: Eval Int
--- letTest = seq (let_ "x" (add (lit 2) (lit 3))) $
---           seq (let_ "x" (add (var "x") (lit 1))) varTest
+letTest :: Eval Int
+letTest = seq (let_ "x" (add (lit 2) (lit 3))) $
+          seq (let_ "x" (add (var "x") (lit 1))) varTest
 
--- whileTest :: Eval Int
--- -- this program is actually a lisp, see:
--- whileTest = seq
---             (let_ "x" (lit 0))
---             (while (lte (var "x") (lit 10))
---              (let_ "x" (add (var "x") (lit 1))))
+whileTest :: Eval Int
+-- this program is actually a lisp, see:
+whileTest = seq
+            (let_ "x" (lit 0))
+            (while (lte (var "x") (lit 10))
+             (let_ "x" (add (var "x") (lit 1))))
 
+seqTest :: Eval Int
+seqTest = seq (let_ "x" (lit 100)) (add (var "x") (var "x"))
+
+mulTest :: Eval Int
+mulTest = mul (lit 3) (lit 2)
+
+-- λ> :t seqTest
 -- seqTest :: Eval Int
--- seqTest = seq (let_ "x" (lit 100)) (add (var "x") (var "x"))
+-- λ> :t mulTest
+
+-- <interactive>:1:1: error:
+--     No instance for (Eq (Eval Int)) arising from a use of ‘it’

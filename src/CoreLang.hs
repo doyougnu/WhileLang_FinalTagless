@@ -1,6 +1,7 @@
 module CoreLang where
 
 import Prelude hiding (seq)
+
 -- | Boolean Expressions
 class BoolExpr b where
   tru  :: b Bool
@@ -15,9 +16,10 @@ class ArExpr a where
   add  :: a Int -> a Int -> a Int
   sub  :: a Int -> a Int -> a Int
   sub x y = add x $ neg y
-  mul  :: (Eq (a Int), Num (a Int)) => a Int -> a Int -> a Int
-  mul x 0 = x
-  mul x y = add x (add x (sub y 1))
+  -- mul  :: (Eq (a Int), Num (a Int)) => a Int -> a Int -> a Int
+  -- mul x 0 = x
+  -- mul x y = add x (add x (sub y 1))
+  mul  :: a Int -> a Int -> a Int
   div_ :: a Int -> a Int -> a Int
   eq   :: a Int -> a Int -> a Bool
   lte  :: a Int -> a Int -> a Bool
