@@ -1,5 +1,6 @@
 module CoreLang where
 
+import Prelude hiding (seq)
 -- | Boolean Expressions
 class BoolExpr b where
   tru  :: b Bool
@@ -13,7 +14,10 @@ class ArExpr a where
   neg  :: a Int -> a Int
   add  :: a Int -> a Int -> a Int
   sub  :: a Int -> a Int -> a Int
-  mul  :: a Int -> a Int -> a Int
+  sub x y = add x $ neg y
+  mul  :: (Eq (a Int), Num (a Int)) => a Int -> a Int -> a Int
+  mul x 0 = x
+  mul x y = add x (add x (sub y 1))
   div_ :: a Int -> a Int -> a Int
   eq   :: a Int -> a Int -> a Bool
   lte  :: a Int -> a Int -> a Bool
@@ -24,6 +28,7 @@ class Stmt r where
   let_  :: String -> r a -> r b
   if_   :: r Bool -> r a -> r a -> r a
   while :: r Bool -> r a -> r a
+  while a b = if_ a (seq b (while a b)) skip
   seq   :: r a -> r b -> r b
   skip  :: r a
 
@@ -66,3 +71,5 @@ class Lists l where
 --------------------------------------------------------------------------------
 -- Stretch Goal
 --------------------------------------------------------------------------------
+class (Stmt t) => Tag t where
+  tag :: t a -> t (Int, a)
