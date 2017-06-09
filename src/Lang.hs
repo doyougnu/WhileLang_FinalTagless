@@ -1,5 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 module Lang where
 
 import Control.Monad.State
@@ -39,26 +37,15 @@ data Prims = I Int | B Bool | NoOp
 type VarStore a = M.Map String a
 
 -- | an eval monad
-data Eval a = E (State (VarStore Prims) Prims)
+data Eval a = E (State (VarStore Prims) Prims) -- Extending Core Lang with State
 
 emptyState :: VarStore Prims
 emptyState = M.singleton "" NoOp
 
--- | Bool instances
--- instance BoolExpr Eval where
---   tru = Eval $ \s -> (s, B True)
---   fls = Eval $ \s -> (s, B False)
---   bEq (Eval j) (Eval j') = Eval $ \s ->
---     let (s1, r1) = j s
---         (s2, r2) = j' s
---     in (s1 `mappend` s2, B $ r1 == r2)
---   bnot (Eval j) = Eval $ \x ->
---     let (s1, B r) = j x
---     in (s1, B $ not r)
-
--- instance BoolExpr Eval where -- Cannot monadify because type synonym instances
--- cannot be partially applied. So I always need to apply Eval to an a which means
--- I cannot make it a typeclass instance. So we need to wrap it around a datatype
+-- instance BoolExpr Eval where -- Cannot monadify because type synonym
+-- instances cannot be partially applied. So I always need to apply Eval to an a
+-- which means I cannot make it a typeclass instance. So we need to wrap it
+-- around a datatype
 instance BoolExpr Eval where 
   tru = E . return $ B True
   fls = E . return $ B False
@@ -119,21 +106,59 @@ instance Stmt Eval where
   skip = E $ return NoOp
 
 --------------------------------------------------------------------------------
--- Extension in Data Constructor, adding Strings to the language
+-- Extension in Data Constructor, adding Strings, Floats to the language
 --------------------------------------------------------------------------------
-data NewPrims = NI Int | NB Bool | S String | F Float | Skip -- addition in constructors
+data NewPrims = NI Int
+              | NB Bool
+              | S String -- extensions in constructor dimension
+              | F Float
+              | L [NewPrims]
+              | Skip 
   deriving (Eq, Show, Ord)
 
--- | an new eval monad
-data NEval a = NE (State (VarStore NewPrims) NewPrims)
+-- | a new eval monad
+data NEval a = NE (State (VarStore NewPrims) NewPrims) 
 
 nEmptyState :: VarStore NewPrims
 nEmptyState = M.singleton "" Skip
 
+runNEval (NE s) = runState s nEmptyState
+
+-- | Compatible Extension, Exponentials
+instance Exp NEval where
+  exp (NE x) (NE y) = NE e
+    where e = do
+            (NI x') <- x
+            (NI y') <- y
+            return . NI $ x' ^ y'
+
+-- | Adding non-compatible extension for strings 
 instance StrExpr NEval where  -- additional operator to handle strings
   slit = NE . return . S
 
---- The rest is the same
+-- | Adding non-compatible extension for Floats
+fHelper f (NE x) (NE y) = do
+  (F x') <- x
+  (F y') <- y
+  return . F $ f x' y'
+
+fwrapper f x y = NE e
+  where e = fHelper f x y
+
+instance Floats NEval where
+  flit = NE . return . F
+  fneg (NE f) = NE e
+    where e = do
+            (F f') <- f
+            return . F $ negate f'
+  fsqrt (NE f) = NE e
+    where e = do
+            (F f') <- f
+            return . F $ sqrt f'
+  fadd  x y = fwrapper (+)  x y
+  fmul  x y = fwrapper (*)  x y
+
+-- The rest is the same
 instance BoolExpr NEval where 
   tru = NE . return $ NB True
   fls = NE . return $ NB False
@@ -168,7 +193,7 @@ instance ArExpr NEval where
   eq x y   = nwrapper (==) NB x y
   lte x y  = nwrapper (<=) NB x y
 
--- -- | statement instance
+-- | statement instance
 instance Stmt NEval where
   if_ (NE c) (NE t) (NE e) = NE e 
     where e = do
@@ -177,7 +202,7 @@ instance Stmt NEval where
             e' <- e
             return $ if c' then t' else e'
 
-  var v = NE e --Cannot use bind or get, No instance declarations, because of general type
+  var v = NE e 
     where e = do
             st <- get
             return $ st M.! v
@@ -193,16 +218,23 @@ instance Stmt NEval where
 
   skip = NE $ return Skip
 
+
 -- | Compatible Extension for Lists
-
--- fails cannot match NewPrims and [NewPrims]
--- instance Lists NewEval where
---   llit (NewEval x) = NewEval $ \s ->
---     let (s1, r) = x s
---     in (s1, [r])
-
--- instance Tag NewEval where
---   tag ()
+instance IntLists NEval where
+  ilit = NE . return . L . (:[]) . NI
+  icons (NE x) (NE xs) = NE e
+    where e = do
+            (NI x') <- x
+            (L xs') <- xs
+            return . L $ ((NI x') : xs')
+  ihead (NE xs) = NE e
+    where e = do
+            (L xs') <- xs
+            return $ head xs'
+  itail (NE xs) = NE e
+    where e = do
+            (L xs') <- xs
+            return . L $ tail xs'
 
 --------------------------------------------------------------------------------  
 -- Testing
@@ -238,6 +270,10 @@ seqTest = seq (let_ "x" (lit 100)) (add (var "x") (var "x"))
 
 mulTest :: Eval Int
 mulTest = mul (lit 3) (lit 2)
+
+listTest :: NEval [Int]
+listTest = ilit 3
+
 
 -- λ> :t seqTest
 -- seqTest :: Eval Int

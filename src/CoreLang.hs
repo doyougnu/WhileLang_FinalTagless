@@ -34,15 +34,33 @@ class Stmt r where
   seq   :: r a -> r b -> r b
   skip  :: r a
 
--- | incompatible extension for strings
+--------------------------------------------------------------------------------
+-- Trivial Extensions
+--------------------------------------------------------------------------------
+
+-- | Compatible Extension for Exponentials
+class Exp r where
+  exp :: r Int -> r Int -> r Int
+
+-- | Incompatible extension for strings
 class StrExpr s where
   slit :: String -> s String
+
+-- | Incompatible extension for floats
+class Floats f where
+  flit  :: Float -> f Float
+  fneg  :: f Float -> f Float
+  fsqrt  :: f Float -> f Float
+  fadd  :: f Float -> f Float -> f Float
+  fsub  :: f Float -> f Float -> f Float
+  fsub x y = fadd x $ fneg y
+  fmul  :: f Float -> f Float -> f Float
 
 --------------------------------------------------------------------------------
 -- Experiments
 --------------------------------------------------------------------------------
 -- incompatible extension for functions
--- No way to bind variables during the apply step
+-- Fails because no way to bind variables during the apply step
 -- class (Stmt f) => Funs f where
 --   defnUnary :: String -> String -> f a -> f a -> f b
 --   defnUnary fname arg = let_ fname (let_ arg body)
@@ -50,16 +68,25 @@ class StrExpr s where
 --   appUnary  :: String -> f a -> f b
 --   appUnary fname
 
--- | should be a Compatible extension, but isn't, adding lists
-class Lists l where
-  llit :: l a -> l [a]
-  cons :: l a -> l [a] -> l [a]
-  nth  :: l Int -> l [a] -> l a
-  head :: l [a] -> l a
-  tail :: l [a] -> l [a]
-  -- another downside no handrolled loops
-  map_ :: (a -> b) -> l [a] -> l [b]
-  rightFold :: (a -> b -> b) -> l b -> l [a] -> l b 
+-- | adding lists, should be a Compatible extension, but isn't
+-- Fails because we have no polymorphism in our language so we need to be able
+-- to dispatch to the right value constructor when we make the list. Could avoid
+-- by directly adding Lists for each primitive
+-- class Lists l where
+--   llit :: l a -> l [a]
+--   cons :: l a -> l [a] -> l [a]
+--   nth  :: l Int -> l [a] -> l a
+--   head :: l [a] -> l a
+--   tail :: l [a] -> l [a]
+--   -- another downside no handrolled loops
+--   map_ :: (a -> b) -> l [a] -> l [b]
+--   rightFold :: (a -> b -> b) -> l b -> l [a] -> l b 
+
+class IntLists l where
+  ilit  :: Int -> l [Int]
+  icons :: l Int -> l [Int] -> l [Int]
+  ihead :: l [Int] -> l Int
+  itail :: l [Int] -> l [Int]
 
 -- | Another way to add lists
 -- Another limitation, cannot create lists as sequenced if statements because we
