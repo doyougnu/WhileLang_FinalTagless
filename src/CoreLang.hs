@@ -80,7 +80,7 @@ class Floats f where
 --   tail :: l [a] -> l [a]
 --   -- another downside no handrolled loops
 --   map_ :: (a -> b) -> l [a] -> l [b]
---   rightFold :: (a -> b -> b) -> l b -> l [a] -> l b 
+--   rightFold :: (a -> b -> b) -> l b -> l [a] -> l b
 
 class IntLists l where
   ilit  :: Int -> l [Int]
@@ -97,8 +97,23 @@ class IntLists l where
 --   lllit :: a -> l a
 --   lllit e = if_ tru (lit e) skip
 
+-- | Adding a print statement to the language
+-- This works because the output type is independent of input type
+class (Stmt o) => Output o where
+  prnt :: o a -> IO () 
 --------------------------------------------------------------------------------
 -- Stretch Goal
 --------------------------------------------------------------------------------
+-- this looks like it will work, but we have no way to dispatch on different
+-- terms in our language. So for instance, we have no way to un-tag our terms, or
+-- in other words we cannot say if you get an if, recur into the then branch,
+-- return the count and then recur into the else branch. We cannot do that
+-- because we do not have Pattern Matching, and because we don't have an "eval"
+-- function. So this would need to be lifted to the evaluater dimension, just like
+-- state
+
 class (Stmt t) => Tag t where
-  tag :: t a -> t (Int, a)
+  tag :: t a -> t [(Int, a)]
+  
+class (Stmt t) => Goto t where
+  goto :: t Int -> t a -> t a

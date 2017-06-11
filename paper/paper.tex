@@ -1,0 +1,108 @@
+\documentclass[9pt,letterpaper]{extarticle}
+\usepackage{extsizes}
+\usepackage[paper=letterpaper,margin=1in]{geometry}
+
+% Table coloring: Must be imported before TikZ
+\usepackage[table,x11names,dvipsnames]{xcolor}
+
+\usepackage{xspace,amsmath,amsfonts,amssymb,hyperref,tikz,multirow}
+\usepackage{graphicx}
+% \graphicspath{{../data/R_plots/}}
+
+\usepackage{parskip}
+
+\newcommand{\todo}[1]{%
+	\mbox{}% prevent marginpar from being on previous paragraph
+	\marginpar{%
+		\colorbox{red!80!black}{\textcolor{white}{to-do}}%
+		\vspace*{-22pt}% hack!
+	}%
+	\textcolor{red}{#1}%
+}
+
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{epigraph}
+
+\title{Final Tagless While Language, Something Quippy Here}
+\author{Jeff Young}
+\date{}
+
+  % \epigraph{And we have ascended, to a new plane of enlightenment. We no longer
+  %   need material things to incant, nor are we bound by the physical realm. We
+  %   have, in a sense, become ephemeral, tagless, in all respects. A gossamer, as
+  %   flimsy as our attachments to this realm.}
+\begin{document}
+	\maketitle
+	% \begin{abstract}
+  %   Do we want/need an abstract?
+	% \end{abstract}
+  \section{System Overview}
+  % What was the Technique that was used
+  % What is the Core System and What are the Extensions to the Core system
+  % Alteast two dimensions of extensions, a New Case, and New Operations, on all cases
+  This project implement's the WHILE Language using the final tagless style in
+  just two haskell files, ``CoreLang.hs'' and ``Lang.hs''. Final tagless style,
+  while briefly discussed in class, is essentially a semantic-based
+  implementation of whatever is being made. In Haskell, this translates into a
+  typeclass based approach for the WHILE language. For example, instead of
+  having a Abstract data type for Statements in the language, we will instead
+  have a typeclass with functions that represent statements in our language. In
+  this sense, Final Tagless, allows extensibility in the constructor dimension,
+  because one may extend value constructors and make a new instantiation of the
+  type class, and final tagless allows extensibility in the operator dimension,
+  because one is free to write their own typeclass in final tagless style and
+  instantiate. An important note is that final tagless style is also extensible
+  in a third dimensions, the evaluator dimension, because all of the language
+  constructs are functions in a typeclass, one is free to implement them how
+  they please. Hence, one may choose to implement them with strict evaluation,
+  or lazy evaluation, with a global state or not.
+
+  \subsection{The Core System}
+  The core system typeclass definitions are to be found in the ``CoreLang.hs''
+  file. The file holds all typeclass definitions for the core language, and all
+  extensions, it is separated into four distinct parts. The first part, labeled
+  ``Core Language'' in comments, consists of the typeclasses that are required
+  to support a minimal implementation of the WHILE language. Specifically, these
+  are boolean expressions, arithmetic expressions, and statements; all of their
+  types are self-explanatory. The while language, in it's core form, only
+  supports integers, booleans, and a unit as primitives. The definition of these
+  primitives are located in the ``CoreLang'' labeled section of the ``Lang.hs''
+  file, along with all class instantiations.
+
+  \subsection{The Extensions to the Core}
+  The extensions made to the core language are as follows. In the constructor
+  domain I extend the language with Strings, Floats, and a list constructor. In
+  the operator dimension I extend the language with two compatible extensions, a
+  trivial extension, adding exponentials to the language, and adding a printing
+  operator to the language. The harder, non-compatible extensions, include
+  operators for strings, floats, and lists. In this way the core language is
+  extended in both the constructor dimension, and operator dimensions. It should
+  be noted that for every implementation I instantiate the core language with a
+  state monad thereby ``extending'' the while language with a global state. This
+  suggests that the final tagless approach is flexible enough to incorporate any
+  monad or monad transformer stack. While I did not explore the ``third
+  dimension'' of extensibility this project proves that it is possible. 
+
+	\section{Extensibility Scenario}
+  The Extensibility Scenario for the WHILE language is identical to that of any
+  embedded DSL. The scenario is generally this: I, the EDSL author want to write
+  my EDSL in a static, strongly typed language like haskell. Then I want to be
+  able to share that EDSL with anyone on the internet and have them use it. This
+  requires that I've taken time to consider how my users may use my EDSL. But it
+  is impossible to predict every use case, so by writing my EDSL in a final
+  tagless style I can ensure that people who do not have access to the source
+  code (because I'll restrict access) can still extend and use the EDSL however
+  they deem fit. In this project's specific case the core WHILE language is the
+  EDSL, and some other developer on the internet realized they need a list
+  construct, and also would like to print statements in the language to a
+  command prompt. Because I have written my implementation of the WHILE language
+  in the final tagless style they are freely able to add these features to the
+  core if they so desire. This scenario is demonstrated in the 
+
+  \section{Challenges and Design Decisions}
+\end{document}

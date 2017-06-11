@@ -19,15 +19,19 @@ primitives then I'll get into trouble because I'll need to remake my state
 monad. This is still extensible because of the typeclasses but is less than
 desirable.
 
-A Disclaimer:
-Ye of little faith beware, this file presupposes that you understand haskell
-typeclasses, state monads and newtype record declarations. I make heavy use of
-an unwrapped state monad so the functions will be confusing if you are not
-familiar with the "under the hood" parts of monads.
+3) This approach is extensible in the evaluator dimensions so I can trivially
+add state to the core language, even though nothing in the core lang mandates
+that we have a global state. We could easily add tracing (writer monad) or error
+handling (Maybe monad or either monad) by extending in this dimension.
+
+4) However a major downside is that I cannot use bind or return operators in the
+instances because I get no instance of Monad for xxx whatever by data constructor
+is. This is a side-effect of being required to wrap my monad stack into a data
+constructor so I can instantiate type classes with it.
 -}
 
 --------------------------------------------------------------------------------
--- Core Language
+-- Core Language Instances
 --------------------------------------------------------------------------------
 -- | Primitive values that this language can use
 data Prims = I Int | B Bool | NoOp
@@ -41,12 +45,15 @@ data Eval a = E (State (VarStore Prims) Prims) -- Extending Core Lang with State
 
 emptyState :: VarStore Prims
 emptyState = M.singleton "" NoOp
+-- emptyState = M.empty
+
+runEval (E s) = runState s emptyState
 
 -- instance BoolExpr Eval where -- Cannot monadify because type synonym
 -- instances cannot be partially applied. So I always need to apply Eval to an a
 -- which means I cannot make it a typeclass instance. So we need to wrap it
 -- around a datatype
-instance BoolExpr Eval where 
+instance BoolExpr Eval where
   tru = E . return $ B True
   fls = E . return $ B False
   bEq (E j) (E k) = E e
@@ -58,7 +65,7 @@ instance BoolExpr Eval where
     where e = do
           (B b) <- j
           return . B $ b
-            
+
 -- | Arithmetic instances
 arHelper f c' (E x) (E y) = do
   (I x') <- x
@@ -69,7 +76,7 @@ wrapper f c' x y = E e
   where e = arHelper f c' x y
 
 instance ArExpr Eval where
-  lit = E . return . I 
+  lit = E . return . I
   neg (E i) = E e
     where e = do
            (I i') <- i
@@ -82,8 +89,8 @@ instance ArExpr Eval where
 
 -- -- | statement instance
 instance Stmt Eval where
-  if_ (E c) (E t) (E e) = E e 
-    where e = do
+  if_ (E c) (E t) (E e) = E res
+    where res = do
             (B c') <- c
             t' <- t
             e' <- e
@@ -113,11 +120,11 @@ data NewPrims = NI Int
               | S String -- extensions in constructor dimension
               | F Float
               | L [NewPrims]
-              | Skip 
+              | Skip
   deriving (Eq, Show, Ord)
 
 -- | a new eval monad
-data NEval a = NE (State (VarStore NewPrims) NewPrims) 
+data NEval a = NE (State (VarStore NewPrims) NewPrims)
 
 nEmptyState :: VarStore NewPrims
 nEmptyState = M.singleton "" Skip
@@ -132,7 +139,7 @@ instance Exp NEval where
             (NI y') <- y
             return . NI $ x' ^ y'
 
--- | Adding non-compatible extension for strings 
+-- | Adding non-compatible extension for strings
 instance StrExpr NEval where  -- additional operator to handle strings
   slit = NE . return . S
 
@@ -159,7 +166,7 @@ instance Floats NEval where
   fmul  x y = fwrapper (*)  x y
 
 -- The rest is the same
-instance BoolExpr NEval where 
+instance BoolExpr NEval where
   tru = NE . return $ NB True
   fls = NE . return $ NB False
   bEq (NE j) (NE k) = NE e
@@ -171,7 +178,7 @@ instance BoolExpr NEval where
     where e = do
           (NB b) <- j
           return . NB $ b
-            
+
 -- | Arithmetic instances
 narHelper f c' (NE x) (NE y) = do
   (NI x') <- x
@@ -182,7 +189,7 @@ nwrapper f c' x y = NE e
   where e = narHelper f c' x y
 
 instance ArExpr NEval where
-  lit = NE . return . NI 
+  lit = NE . return . NI
   neg (NE i) = NE e
     where e = do
            (NI i') <- i
@@ -195,14 +202,14 @@ instance ArExpr NEval where
 
 -- | statement instance
 instance Stmt NEval where
-  if_ (NE c) (NE t) (NE e) = NE e 
+  if_ (NE c) (NE t) (NE e) = NE e
     where e = do
             (NB c') <- c
             t' <- t
             e' <- e
             return $ if c' then t' else e'
 
-  var v = NE e 
+  var v = NE e
     where e = do
             st <- get
             return $ st M.! v
@@ -218,8 +225,8 @@ instance Stmt NEval where
 
   skip = NE $ return Skip
 
-
 -- | Compatible Extension for Lists
+-- Would be the same for any other primitive value, just using Int as an example
 instance IntLists NEval where
   ilit = NE . return . L . (:[]) . NI
   icons (NE x) (NE xs) = NE e
@@ -236,42 +243,55 @@ instance IntLists NEval where
             (L xs') <- xs
             return . L $ tail xs'
 
---------------------------------------------------------------------------------  
+-- | Adding printing to the language
+-- Can't unbox to a generic so we have to print tags
+-- unBox :: NewPrims -> [a] 
+-- unBox (F  f) = [f]
+-- unBox (NI x) = [x]
+-- unBox (NB b) = [b]
+-- unBox (S  s) = [s]
+-- unBox (L xs) = concatMap unBox xs
+
+instance Output NEval where
+  prnt x = print . fst $ runNEval x
+
+--------------------------------------------------------------------------------
 -- Testing
 --------------------------------------------------------------------------------
 
 -- we can run this like so: runEval ifTest emptyState
-ifTest :: Eval Int
+ifTest :: (ArExpr e, BoolExpr e, Stmt e) => e Int
+-- ifTest :: Eval Int
 ifTest =  if_ (bEq tru fls) (add (lit 1) (lit 2)) (add (lit 1) (lit 1))
 
 -- run like: runEval varTest (M.insert "x" (I 100) emptyState
-varTest :: Eval Int
+varTest :: (Stmt e) => e Int
 varTest = var "x"
 
-stringTest :: NEval String
+stringTest :: (StrExpr s) => s String
 stringTest = slit "what"
 
 letStringTest :: NEval String
 letStringTest = seq (let_ "x" (slit "thisisx")) stringTest
 
-letTest :: Eval Int
+letTest :: (Stmt s, ArExpr s) => s Int
 letTest = seq (let_ "x" (add (lit 2) (lit 3))) $
           seq (let_ "x" (add (var "x") (lit 1))) varTest
 
-whileTest :: Eval Int
+whileTest :: (Stmt s, BoolExpr s, ArExpr s) => s Int
 -- this program is actually a lisp, see:
 whileTest = seq
             (let_ "x" (lit 0))
             (while (lte (var "x") (lit 10))
              (let_ "x" (add (var "x") (lit 1))))
 
-seqTest :: Eval Int
+seqTest :: (Stmt s, ArExpr s) => s Int
 seqTest = seq (let_ "x" (lit 100)) (add (var "x") (var "x"))
 
-mulTest :: Eval Int
+mulTest :: (ArExpr s) => s Int
 mulTest = mul (lit 3) (lit 2)
 
-listTest :: NEval [Int]
+listTest :: (IntLists l) => l [Int]
 listTest = ilit 3
 
 
