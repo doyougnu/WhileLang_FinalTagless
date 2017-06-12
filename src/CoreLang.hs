@@ -1,6 +1,15 @@
+{-# LANGUAGE FlexibleInstances #-}
 module CoreLang where
 
+import Control.Monad.State
+import Control.Monad.State.Class
+
+import qualified Data.Map as M
 import Prelude hiding (seq)
+
+--------------------------------------------------------------------------------
+-- Core Language
+--------------------------------------------------------------------------------
 
 -- | Boolean Expressions
 class BoolExpr b where
@@ -35,85 +44,82 @@ class Stmt r where
   skip  :: r a
 
 --------------------------------------------------------------------------------
--- Trivial Extensions
+-- Core Language Instances
 --------------------------------------------------------------------------------
+-- | Primitive values that this language can use
+data Prims = I Int | B Bool | NoOp
+  deriving (Eq, Show, Ord)
 
--- | Compatible Extension for Exponentials
-class Exp r where
-  exp :: r Int -> r Int -> r Int
+-- | Map to hold let bound variables
+type VarStore a = M.Map String a
 
--- | Incompatible extension for strings
-class StrExpr s where
-  slit :: String -> s String
+-- | an eval monad
+data Eval a = E (State (VarStore Prims) Prims) -- Extending Core Lang with State
 
--- | Incompatible extension for floats
-class Floats f where
-  flit  :: Float -> f Float
-  fneg  :: f Float -> f Float
-  fsqrt  :: f Float -> f Float
-  fadd  :: f Float -> f Float -> f Float
-  fsub  :: f Float -> f Float -> f Float
-  fsub x y = fadd x $ fneg y
-  fmul  :: f Float -> f Float -> f Float
+emptyState :: VarStore Prims
+emptyState = M.empty
 
---------------------------------------------------------------------------------
--- Experiments
---------------------------------------------------------------------------------
--- incompatible extension for functions
--- Fails because no way to bind variables during the apply step
--- class (Stmt f) => Funs f where
---   defnUnary :: String -> String -> f a -> f a -> f b
---   defnUnary fname arg = let_ fname (let_ arg body)
+runEval (E s) = runState s emptyState
 
---   appUnary  :: String -> f a -> f b
---   appUnary fname
+-- instance BoolExpr Eval where -- Cannot monadify because type synonym
+-- instances cannot be partially applied. So I always need to apply Eval to an a
+-- which means I cannot make it a typeclass instance. So we need to wrap it
+-- around a datatype
+instance BoolExpr Eval where
+  tru = E . return $ B True
+  fls = E . return $ B False
+  bEq (E j) (E k) = E e
+    where e = do
+          (B x) <- j
+          (B y) <- k
+          return . B $ x == y
+  bnot (E j) = E e
+    where e = do
+          (B b) <- j
+          return . B $ b
 
--- | adding lists, should be a Compatible extension, but isn't
--- Fails because we have no polymorphism in our language so we need to be able
--- to dispatch to the right value constructor when we make the list. Could avoid
--- by directly adding Lists for each primitive
--- class Lists l where
---   llit :: l a -> l [a]
---   cons :: l a -> l [a] -> l [a]
---   nth  :: l Int -> l [a] -> l a
---   head :: l [a] -> l a
---   tail :: l [a] -> l [a]
---   -- another downside no handrolled loops
---   map_ :: (a -> b) -> l [a] -> l [b]
---   rightFold :: (a -> b -> b) -> l b -> l [a] -> l b
+-- | Arithmetic instances
+arHelper f c' (E x) (E y) = do
+  (I x') <- x
+  (I y') <- y
+  return . c' $ f x' y'
 
-class IntLists l where
-  ilit  :: Int -> l [Int]
-  icons :: l Int -> l [Int] -> l [Int]
-  ihead :: l [Int] -> l Int
-  itail :: l [Int] -> l [Int]
+wrapper f c' x y = E e
+  where e = arHelper f c' x y
 
--- | Another way to add lists
--- Another limitation, cannot create lists as sequenced if statements because we
--- need to be specific about the smart constructors, we have no dispatch for the
--- right "lit" call on "e"
+instance ArExpr Eval where
+  lit = E . return . I
+  neg (E i) = E e
+    where e = do
+           (I i') <- i
+           return . I $ i'
+  add x y  = wrapper (+) I x y
+  div_ x y = wrapper (div) I x y
+  mul x y  = wrapper (*) I x y
+  eq x y   = wrapper (==) B x y
+  lte x y  = wrapper (<=) B x y
 
--- class (Stmt l) => Lists2 l where
---   lllit :: a -> l a
---   lllit e = if_ tru (lit e) skip
+-- -- | statement instance
+instance Stmt Eval where
+  if_ (E c) (E t) (E e) = E res
+    where res = do
+            (B c') <- c
+            t' <- t
+            e' <- e
+            return $ if c' then t' else e'
 
--- | Adding a print statement to the language
--- This works because the output type is independent of input type
-class (Stmt o) => Output o where
-  prnt :: o a -> IO () 
---------------------------------------------------------------------------------
--- Stretch Goal
---------------------------------------------------------------------------------
--- this looks like it will work, but we have no way to dispatch on different
--- terms in our language. So for instance, we have no way to un-tag our terms, or
--- in other words we cannot say if you get an if, recur into the then branch,
--- return the count and then recur into the else branch. We cannot do that
--- because we do not have Pattern Matching, and because we don't have an "eval"
--- function. So this would need to be lifted to the evaluater dimension, just like
--- state
+  var v = E e --Cannot use bind or get, No instance declarations, because of general type
+    where e = do
+            st <- get
+            return $ st M.! v
 
-class (Stmt t) => Tag t where
-  tag :: t a -> t [(Int, a)]
-  
-class (Stmt t) => Goto t where
-  goto :: t Int -> t a -> t a
+  let_ v (E x) = E e
+    where e = do
+            st <- get
+            x' <- x
+            put $ M.insert v x' st
+            return NoOp
+
+  seq (E x) (E y) = E $ do x;y
+
+  skip = E $ return NoOp

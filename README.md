@@ -11,7 +11,8 @@ I am expecting anyone who wants to use this to be familiar with ghc and ghci. So
 in order to run anything in the src/Lang.hs file just boot up ghci in the root
 folder with the command ```stack ghci``` and you'll enter the right REPL. Then
 to run any statement you may want to run you'll need to pass it to the runEval
-function. Here are some examples:
+function, for the core language, and runNEval for the extended language. Here
+are some examples, you can find more at the bottom of the Extensions.hs file:
 
 ### Premade Examples:
 
